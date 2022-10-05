@@ -1,5 +1,5 @@
 
-FROM qcdis/miniconda3 AS build
+FROM qcdis/miniconda3-distributed-learning AS build
 COPY cell1-skoulouzis-environment.yaml .
 RUN conda env update -f cell1-skoulouzis-environment.yaml
 RUN conda-pack -n venv -o /tmp/env.tar && \
