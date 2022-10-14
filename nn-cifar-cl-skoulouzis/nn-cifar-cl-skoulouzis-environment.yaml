@@ -5,6 +5,6 @@ channels:
 dependencies:
   - pip
   - pip:
-    - numpy==1.23.0
     - torch
+    - numpy==1.23.0
     - torchvision
