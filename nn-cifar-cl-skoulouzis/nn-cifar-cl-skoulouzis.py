@@ -1,14 +1,14 @@
-import torch.nn as nn
-import torch
 import torch.nn.functional as F
-import torchvision.transforms as transforms
-import numpy as np
-import csv
 from torchvision.datasets import CIFAR10
-from typing import Dict
-import time
 from typing import Tuple
+from typing import Dict
+import torchvision.transforms as transforms
+import torch
+import torch.nn as nn
 from torch import Tensor
+import csv
+import numpy as np
+import time
 
 import argparse
 arg_parser = argparse.ArgumentParser()
