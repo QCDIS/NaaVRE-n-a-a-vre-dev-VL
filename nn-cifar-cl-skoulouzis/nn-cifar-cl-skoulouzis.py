@@ -1,22 +1,22 @@
-from torch import Tensor
-from typing import Tuple
-import torchvision.transforms as transforms
-from torchvision.datasets import CIFAR10
-import torch
-import csv
-import numpy as np
-from typing import Dict
 import torch.nn as nn
+import torch
 import torch.nn.functional as F
+import torchvision.transforms as transforms
+import numpy as np
+import csv
+from torchvision.datasets import CIFAR10
+from typing import Dict
 import time
+from typing import Tuple
+from torch import Tensor
 
 import argparse
 arg_parser = argparse.ArgumentParser()
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
-arg_parser.add_argument('--BATCH_SIZE', action='store', type=int, required='True', dest='BATCH_SIZE')
-arg_parser.add_argument('--epochs', action='store', type=int, required='True', dest='epochs')
+arg_parser.add_argument('--BATCH_SIZE', action='store', type=str, required='True', dest='BATCH_SIZE')
+arg_parser.add_argument('--epochs', action='store', type=str, required='True', dest='epochs')
 
 
 args = arg_parser.parse_args()
@@ -56,6 +56,8 @@ class Net(nn.Module):
 DATA_ROOT = "./data/cifar-10"
 BATCH_SIZE = BATCH_SIZE
 epochs = epochs
+
+
 
 def load_data() -> Tuple[torch.utils.data.DataLoader, torch.utils.data.DataLoader, Dict]:
     """Load CIFAR-10 (training and test set)."""
