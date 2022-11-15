@@ -6,7 +6,7 @@ arg_parser = argparse.ArgumentParser()
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
-arg_parser.add_argument('--split_laz_files', action='store', type=list, required='True', dest='split_laz_files')
+arg_parser.add_argument('--laz_files', action='store', type=list, required='True', dest='laz_files')
 
 arg_parser.add_argument('--param_hostname', action='store', type=str, required='True', dest='param_hostname')
 arg_parser.add_argument('--param_login', action='store', type=str, required='True', dest='param_login')
@@ -22,7 +22,7 @@ args = arg_parser.parse_args()
 
 id = args.id
 
-split_laz_files = args.split_laz_files
+laz_files = args.laz_files
 
 param_hostname = args.param_hostname
 param_login = args.param_login
@@ -64,7 +64,7 @@ retiling_input = {
 }
 
     
-file = split_laz_files
+file = laz_files
 retiler = Retiler(file.replace('"',''),label=file).config(retiling_input).setup_webdav_client(conf_wd_opts)
 retiler_output = retiler.run()
 
