@@ -1,0 +1,95 @@
+name: Build containers on workflow_dispatch
+
+on:
+  workflow_dispatch:
+    branches: [ main ]
+    inputs:
+      build_dir:
+        description : 'Build Directory'
+        required    : true
+        default     : ''
+      dockerfile:
+        description : 'Dockerfile Name'
+        required    : true
+        default     : ''
+      image_repo:
+        description : 'Image Repository'
+        required    : true
+        default     : ''
+      image_tag:
+        description : "Image Tag"
+        required    : true
+        default     : ''
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - uses: actions/checkout@v2
+      - name: Build and push image
+        run:  |
+          dir="${{ github.event.inputs.build_dir }}"
+          if [ "$dir" != ".github/workflows" ]; then
+            cd $dir
+            docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
+            docker push ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
+          fi
+
+#
+#      - name: Push image to GitHub Container Registry
+#        run:  |
+#          for changed_file in ${{ needs.get-changed-files.outputs.files }}; do
+#            dir="$(dirname "${changed_file}")"
+#            if [ "$dir" != ".github/workflows" ]; then
+#              cd $dir
+#              dockerfile=`ls Dockerfile.*`
+#              IFS='.' read -ra names_array <<< "$dockerfile"
+#              echo Pusing ${names_array[1]}/${names_array[2]}
+#              docker push ${names_array[1]}/${names_array[2]}
+#            fi
+#          done
+
+#  build:
+#    needs: [get-changed-files]
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Build image
+#        run:  |
+#          for changed_file in ${{ steps.files.outputs.all }}; do
+#            dir="$(dirname "${changed_file}")"
+#            if [ "$dir" != ".github/workflows" ]; then
+#              cd $dir
+#              dockerfile=`ls Dockerfile.*`
+#              IFS='.' read -ra names_array <<< "$dockerfile"
+#              echo Building ${names_array[1]}/${names_array[2]}
+#              docker build . --file $dockerfile --tag ${names_array[1]}/${names_array[2]}
+#            fi
+#          done
+#
+#
+#    - name: Login to GitHub Container Registry
+#      uses: docker/login-action@v1
+#      with:
+#        username: ${{ secrets.DOCKERHUB_USERNAME }}
+#        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+#
+#
+#    - name: Push image to GitHub Container Registry
+#      run: |
+#        for changed_file in ${{ steps.files.outputs.all }}; do
+#          dir="$(dirname "${changed_file}")"
+#          if [ "$dir" != ".github/workflows" ]; then
+#            cd $dir
+#            dockerfile=`ls Dockerfile.*`
+#            IFS='.' read -ra names_array <<< "$dockerfile"
+#            echo Pusshing ${names_array[1]}/${names_array[2]}
+#            docker push ${names_array[1]}/${names_array[2]}
+#          fi
+#        done
+#
