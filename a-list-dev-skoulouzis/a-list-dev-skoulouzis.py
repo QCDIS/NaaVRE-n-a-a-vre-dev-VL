@@ -35,6 +35,7 @@ param_f = args.param_f
 
 print(param_a)
 laz_files = [param_a,param_b,param_c,param_d,param_e,param_f,param_3,param_5,param_6]
+print(laz_files)
 
 import json
 filename = "/tmp/laz_files_" + id + ".json"
