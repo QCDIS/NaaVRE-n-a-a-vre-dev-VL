@@ -39,11 +39,11 @@ a = 1 + (param_1,param_2,param_3,param_4,param_5,param_6,param_7)
 c = b + []
 
 import json
-filename = "/tmp/c_" + id + ".json"
-file_c = open(filename, "w")
-file_c.write(json.dumps(c))
-file_c.close()
 filename = "/tmp/b_" + id + ".json"
 file_b = open(filename, "w")
 file_b.write(json.dumps(b))
 file_b.close()
+filename = "/tmp/c_" + id + ".json"
+file_c = open(filename, "w")
+file_c.write(json.dumps(c))
+file_c.close()
