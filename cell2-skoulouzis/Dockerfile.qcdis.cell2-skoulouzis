@@ -1,0 +1,14 @@
+
+FROM qcdis/miniconda3 AS build
+COPY cell2-skoulouzis-environment.yaml .
+RUN conda env update -f cell2-skoulouzis-environment.yaml
+RUN conda-pack -n venv -o /tmp/env.tar && \
+    mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
+    rm /tmp/env.tar
+RUN /venv/bin/conda-unpack
+
+FROM debian:buster AS runtime
+RUN apt update -y && apt upgrade -y && apt install jq -y
+COPY --from=build /venv /venv
+COPY cell2-skoulouzis.py .
+
