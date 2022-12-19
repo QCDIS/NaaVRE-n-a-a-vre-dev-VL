@@ -1,0 +1,8 @@
+name: venv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pip
+  - pip:
+    - laserfarm==0.1.4
