@@ -1,0 +1,4 @@
+name: venv
+channels:
+  - conda-forge
+  - defaults
