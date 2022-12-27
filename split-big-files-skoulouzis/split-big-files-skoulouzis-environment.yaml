@@ -6,5 +6,5 @@ dependencies:
   - pip
   - pip:
     - numpy==1.23.0
-    - webdavclient3
     - laspy[lazrs,laszip]
+    - webdavclient3
