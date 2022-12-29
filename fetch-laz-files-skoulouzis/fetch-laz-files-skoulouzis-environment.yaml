@@ -2,7 +2,9 @@ name: venv
 channels:
   - conda-forge
   - defaults
+  - pytorch
+  - fastai
 dependencies:
   - pip
-  - pip:
-    - laserfarm==0.1.4
+  - python>=3.8
+  - laserfarm
