@@ -2,11 +2,9 @@ name: venv
 channels:
   - conda-forge
   - defaults
-  - pytorch
-  - fastai
 dependencies:
   - pip
-  - python>=3.8
-  - laspy
-  - numpy
-  - webdavclient3
+  - pip:
+    - laspy
+    - numpy
+    - webdav3
