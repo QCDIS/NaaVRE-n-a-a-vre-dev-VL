@@ -42,7 +42,6 @@ conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login,
 conf_laz_compression_factor = '7'
 conf_max_filesize = '262144000'  # desired max file size (in bytes)
 
-
 def save_chunk_to_laz_file(in_filename, 
                            out_filename, 
                            offset, 
