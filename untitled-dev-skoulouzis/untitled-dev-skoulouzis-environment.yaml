@@ -7,4 +7,8 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - multiply_data_access
+  - laspy
+  - numpy
+  - webdavclient3
+  - pip:
+    - laserfarm
