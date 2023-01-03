@@ -1,5 +1,5 @@
 
-FROM qcdis/miniconda3-multiply AS build
+FROM qcdis/miniconda3 AS build
 COPY untitled-dev-skoulouzis-environment.yaml .
 RUN conda env update -f untitled-dev-skoulouzis-environment.yaml
 RUN conda-pack -n venv -o /tmp/env.tar && \
