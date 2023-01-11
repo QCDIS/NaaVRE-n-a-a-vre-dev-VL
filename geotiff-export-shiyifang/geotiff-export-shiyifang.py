@@ -9,6 +9,8 @@ arg_parser.add_argument('--id', action='store', type=str, required=True, dest='i
 
 arg_parser.add_argument('--Feature_Extraction_output', action='store', type=str, required='True', dest='Feature_Extraction_output')
 
+arg_parser.add_argument('--features', action='store', type=str, required='True', dest='features')
+
 arg_parser.add_argument('--param_hostname', action='store', type=str, required='True', dest='param_hostname')
 arg_parser.add_argument('--param_login', action='store', type=str, required='True', dest='param_login')
 arg_parser.add_argument('--param_password', action='store', type=str, required='True', dest='param_password')
@@ -19,6 +21,8 @@ print(args)
 id = args.id
 
 Feature_Extraction_output = args.Feature_Extraction_output
+import json
+features = json.loads(args.features.replace('\'','').replace('[','["').replace(']','"]'))
 
 param_hostname = args.param_hostname
 param_login = args.param_login
@@ -38,6 +42,7 @@ conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login,
 
 print(Feature_Extraction_output)
 
+feature = features
 
 remote_path_geotiffs = conf_remote_path_ahn.parent / 'geotiffs'
 
