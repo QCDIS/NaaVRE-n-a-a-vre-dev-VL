@@ -8,4 +8,4 @@ dependencies:
   - pip
   - python>=3.8
   - pip:
-    - laserfarm
+    - git+https://github.com/QCDIS/Laserfarm.git
