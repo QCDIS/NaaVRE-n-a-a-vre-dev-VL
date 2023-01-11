@@ -1,56 +1,56 @@
-import pathlib
 from laserfarm import Retiler
+import pathlib
 
 import argparse
 arg_parser = argparse.ArgumentParser()
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
-arg_parser.add_argument('--laz_files', action='store', type=list, required='True', dest='laz_files')
+
+arg_parser.add_argument('--split_laz_files', action='store', type=str, required='True', dest='split_laz_files')
 
 arg_parser.add_argument('--param_hostname', action='store', type=str, required='True', dest='param_hostname')
 arg_parser.add_argument('--param_login', action='store', type=str, required='True', dest='param_login')
-arg_parser.add_argument('--param_max_x', action='store', type=float, required='True', dest='param_max_x')
-arg_parser.add_argument('--param_max_y', action='store', type=float, required='True', dest='param_max_y')
-arg_parser.add_argument('--param_min_x', action='store', type=float, required='True', dest='param_min_x')
-arg_parser.add_argument('--param_min_y', action='store', type=float, required='True', dest='param_min_y')
-arg_parser.add_argument('--param_n_tiles_side', action='store', type=int, required='True', dest='param_n_tiles_side')
 arg_parser.add_argument('--param_password', action='store', type=str, required='True', dest='param_password')
-arg_parser.add_argument('--param_remote_path_root', action='store', type=str, required='True', dest='param_remote_path_root')
 
 args = arg_parser.parse_args()
+print(args)
 
 id = args.id
 
-laz_files = args.laz_files
+import json
+split_laz_files = json.loads(args.split_laz_files.replace('\'','').replace('[','["').replace(']','"]'))
 
 param_hostname = args.param_hostname
 param_login = args.param_login
-param_max_x = args.param_max_x
-param_max_y = args.param_max_y
-param_min_x = args.param_min_x
-param_min_y = args.param_min_y
-param_n_tiles_side = args.param_n_tiles_side
 param_password = args.param_password
-param_remote_path_root = args.param_remote_path_root
 
-conf_remote_path_split = pathlib.Path(param_remote_path_root + '/split')
+conf_max_x = '398892.19'
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
+conf_max_y = '726783.87'
+conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+ 'myname')
+conf_min_y = '214783.87'
+conf_min_x = '-113107.81'
+conf_n_tiles_side = '512'
 conf_local_tmp = pathlib.Path('/tmp')
-conf_remote_path_retiled = pathlib.Path(param_remote_path_root + '/retiled/')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 
-conf_remote_path_split = pathlib.Path(param_remote_path_root + '/split')
+conf_max_x = '398892.19'
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
+conf_max_y = '726783.87'
+conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+ 'myname')
+conf_min_y = '214783.87'
+conf_min_x = '-113107.81'
+conf_n_tiles_side = '512'
 conf_local_tmp = pathlib.Path('/tmp')
-conf_remote_path_retiled = pathlib.Path(param_remote_path_root + '/retiled/')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-remote_path_retiled = str(conf_remote_path_retiled)
 
 grid_retile = {
-    'min_x': float(param_min_x),
-    'max_x': float(param_max_x),
-    'min_y': float(param_min_y),
-    'max_y': float(param_max_y),
-    'n_tiles_side': int(param_n_tiles_side)
+    'min_x': float(conf_min_x),
+    'max_x': float(conf_max_x),
+    'min_y': float(conf_min_y),
+    'max_y': float(conf_max_y),
+    'n_tiles_side': int(conf_n_tiles_side)
 }
 
 retiling_input = {
@@ -63,12 +63,20 @@ retiling_input = {
     'cleanlocalfs': {}
 }
 
+for file in split_laz_files:
+    print('Retiling: '+file)
+    retiler = Retiler(file.replace('"',''),label=file).config(retiling_input).setup_webdav_client(conf_wd_opts)
+    retiler_output = retiler.run()
     
-file = laz_files
-retiler = Retiler(file.replace('"',''),label=file).config(retiling_input).setup_webdav_client(conf_wd_opts)
-retiler_output = retiler.run()
+    
+remote_path_retiled = conf_remote_path_retiled.as_posix()
+print(type(remote_path_retiled))
 
 import json
+filename = "/tmp/retiler_output_" + id + ".json"
+file_retiler_output = open(filename, "w")
+file_retiler_output.write(json.dumps(retiler_output))
+file_retiler_output.close()
 filename = "/tmp/remote_path_retiled_" + id + ".json"
 file_remote_path_retiled = open(filename, "w")
 file_remote_path_retiled.write(json.dumps(remote_path_retiled))
