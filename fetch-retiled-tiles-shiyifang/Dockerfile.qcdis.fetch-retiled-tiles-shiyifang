@@ -1,0 +1,14 @@
+
+FROM qcdis/miniconda3-pdal AS build
+COPY fetch-retiled-tiles-shiyifang-environment.yaml .
+RUN mamba env update -f fetch-retiled-tiles-shiyifang-environment.yaml
+RUN conda-pack -n venv -o /tmp/env.tar && \
+    mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
+    rm /tmp/env.tar
+RUN /venv/bin/conda-unpack
+
+FROM debian:buster AS runtime
+RUN apt update -y && apt upgrade -y && apt install jq -y
+COPY --from=build /venv /venv
+COPY fetch-retiled-tiles-shiyifang.py .
+
