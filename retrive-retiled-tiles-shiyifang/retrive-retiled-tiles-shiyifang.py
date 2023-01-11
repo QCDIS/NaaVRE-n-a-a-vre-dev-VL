@@ -1,7 +1,7 @@
-import pathlib
-from laserfarm.remote_utils import get_wdclient
 import fnmatch
 from laserfarm.remote_utils import list_remote
+from laserfarm.remote_utils import get_wdclient
+import pathlib
 
 import argparse
 arg_parser = argparse.ArgumentParser()
@@ -26,10 +26,10 @@ param_hostname = args.param_hostname
 param_login = args.param_login
 param_password = args.param_password
 
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'Yifang')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'Yifang')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 remote_path_retiled
 
