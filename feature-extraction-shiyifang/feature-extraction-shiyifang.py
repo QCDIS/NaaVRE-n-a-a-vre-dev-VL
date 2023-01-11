@@ -103,14 +103,16 @@ for t in tiles:
     processing = DataProcessing(t, tile_index=idx,label=t).config(feature_extraction_input).setup_webdav_client(conf_wd_opts)
     processing.run()
     
-Feature_Extraction_output = 0
+remote_path_targets = conf_remote_path_targets.as_posix()
+
+print(type(remote_path_targets))
 
 import json
 filename = "/tmp/features_" + id + ".json"
 file_features = open(filename, "w")
 file_features.write(json.dumps(features))
 file_features.close()
-filename = "/tmp/Feature_Extraction_output_" + id + ".json"
-file_Feature_Extraction_output = open(filename, "w")
-file_Feature_Extraction_output.write(json.dumps(Feature_Extraction_output))
-file_Feature_Extraction_output.close()
+filename = "/tmp/remote_path_targets_" + id + ".json"
+file_remote_path_targets = open(filename, "w")
+file_remote_path_targets.write(json.dumps(remote_path_targets))
+file_remote_path_targets.close()
