@@ -25,37 +25,37 @@ param_hostname = args.param_hostname
 param_login = args.param_login
 param_password = args.param_password
 
-conf_tile_mesh_size = '10.'
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
-conf_local_tmp = pathlib.Path('/tmp')
-conf_validate_precision = '0.001'
-conf_attribute = 'raw_classification'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_feature_name = 'perc_95_normalized_height'
-conf_apply_filter_value = '1'
-conf_min_y = '214783.87'
-conf_filter_type= 'select_equal'
-conf_min_x = '-113107.81'
 conf_max_y = '726783.87'
-conf_n_tiles_side = '512'
-conf_max_x = '398892.19'
+conf_filter_type= 'select_equal'
+conf_min_y = '214783.87'
+conf_feature_name = 'perc_95_normalized_height'
 conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'myname')
+conf_min_x = '-113107.81'
+conf_tile_mesh_size = '10.'
+conf_n_tiles_side = '512'
+conf_attribute = 'raw_classification'
+conf_max_x = '398892.19'
+conf_validate_precision = '0.001'
+conf_apply_filter_value = '1'
+conf_local_tmp = pathlib.Path('/tmp')
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
 
-conf_tile_mesh_size = '10.'
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
-conf_local_tmp = pathlib.Path('/tmp')
-conf_validate_precision = '0.001'
-conf_attribute = 'raw_classification'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_feature_name = 'perc_95_normalized_height'
-conf_apply_filter_value = '1'
-conf_min_y = '214783.87'
-conf_filter_type= 'select_equal'
-conf_min_x = '-113107.81'
 conf_max_y = '726783.87'
-conf_n_tiles_side = '512'
-conf_max_x = '398892.19'
+conf_filter_type= 'select_equal'
+conf_min_y = '214783.87'
+conf_feature_name = 'perc_95_normalized_height'
 conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'myname')
+conf_min_x = '-113107.81'
+conf_tile_mesh_size = '10.'
+conf_n_tiles_side = '512'
+conf_attribute = 'raw_classification'
+conf_max_x = '398892.19'
+conf_validate_precision = '0.001'
+conf_apply_filter_value = '1'
+conf_local_tmp = pathlib.Path('/tmp')
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
     
 for t in tiles:
     features = [conf_feature_name]
@@ -102,4 +102,13 @@ for t in tiles:
 
     processing = DataProcessing(t, tile_index=idx,label=t).config(feature_extraction_input).setup_webdav_client(conf_wd_opts)
     processing.run()
+    
+remote_path_targets = conf_remote_path_targets.as_posix()
 
+print(type(remote_path_targets))
+
+import json
+filename = "/tmp/remote_path_targets_" + id + ".json"
+file_remote_path_targets = open(filename, "w")
+file_remote_path_targets.write(json.dumps(remote_path_targets))
+file_remote_path_targets.close()
