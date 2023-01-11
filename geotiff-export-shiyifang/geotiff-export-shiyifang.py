@@ -7,7 +7,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--Feature_Extraction_output', action='store', type=str, required='True', dest='Feature_Extraction_output')
+arg_parser.add_argument('--Feature_Extraction_output', action='store', type=int, required='True', dest='Feature_Extraction_output')
 
 arg_parser.add_argument('--features', action='store', type=str, required='True', dest='features')
 
