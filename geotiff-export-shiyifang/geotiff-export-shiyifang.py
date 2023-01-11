@@ -1,5 +1,5 @@
-import pathlib
 from laserfarm import GeotiffWriter
+import pathlib
 
 import argparse
 arg_parser = argparse.ArgumentParser()
@@ -24,22 +24,22 @@ param_hostname = args.param_hostname
 param_login = args.param_login
 param_password = args.param_password
 
-conf_remote_path_ahn =  '/webdav/LAZ'
 conf_feature_name = 'perc_95_normalized_height'
-conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'myname')
-conf_local_tmp = pathlib.Path('/tmp')
+conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_remote_path_geotiffs = pathlib.Path( '/webdav/LAZ' + '/geotiffs_'+ 'Yifang')
+conf_local_tmp = pathlib.Path('/tmp')
 
-conf_remote_path_ahn =  '/webdav/LAZ'
 conf_feature_name = 'perc_95_normalized_height'
-conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'myname')
-conf_local_tmp = pathlib.Path('/tmp')
+conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_remote_path_geotiffs = pathlib.Path( '/webdav/LAZ' + '/geotiffs_'+ 'Yifang')
+conf_local_tmp = pathlib.Path('/tmp')
 
 remote_path_targets
 
 
-remote_path_geotiffs = conf_remote_path_ahn.parent / 'geotiffs'
+remote_path_geotiffs = conf_remote_path_geotiffs.as_posix()
 
 geotiff_export_input = {
     'setup_local_fs': {'tmp_folder': conf_local_tmp.as_posix()},
@@ -47,7 +47,7 @@ geotiff_export_input = {
     'parse_point_cloud': {},
     'data_split': {'xSub': 1, 'ySub': 1},
     'create_subregion_geotiffs': {'output_handle': 'geotiff'},
-    'pushremote': remote_path_geotiffs.as_posix(),
+    'pushremote': conf_remote_path_geotiffs.as_posix(),
     'cleanlocalfs': {}   
 }
 
