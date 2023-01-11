@@ -1,5 +1,5 @@
-from laserfarm import DataProcessing
 import pathlib
+from laserfarm import DataProcessing
 
 import argparse
 arg_parser = argparse.ArgumentParser()
@@ -25,37 +25,37 @@ param_hostname = args.param_hostname
 param_login = args.param_login
 param_password = args.param_password
 
-conf_max_x = '398892.19'
-conf_tile_mesh_size = '10.'
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
 conf_feature_name = 'perc_95_normalized_height'
-conf_max_y = '726783.87'
-conf_filter_type= 'select_equal'
-conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'myname')
-conf_min_y = '214783.87'
-conf_attribute = 'raw_classification'
-conf_validate_precision = '0.001'
-conf_min_x = '-113107.81'
 conf_n_tiles_side = '512'
-conf_local_tmp = pathlib.Path('/tmp')
+conf_attribute = 'raw_classification'
+conf_min_x = '-113107.81'
+conf_min_y = '214783.87'
+conf_filter_type= 'select_equal'
 conf_apply_filter_value = '1'
+conf_max_x = '398892.19'
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'Yifang')
+conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_tile_mesh_size = '10.'
+conf_validate_precision = '0.001'
+conf_local_tmp = pathlib.Path('/tmp')
+conf_max_y = '726783.87'
 
-conf_max_x = '398892.19'
-conf_tile_mesh_size = '10.'
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'myname')
 conf_feature_name = 'perc_95_normalized_height'
-conf_max_y = '726783.87'
-conf_filter_type= 'select_equal'
-conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'myname')
-conf_min_y = '214783.87'
-conf_attribute = 'raw_classification'
-conf_validate_precision = '0.001'
-conf_min_x = '-113107.81'
 conf_n_tiles_side = '512'
-conf_local_tmp = pathlib.Path('/tmp')
+conf_attribute = 'raw_classification'
+conf_min_x = '-113107.81'
+conf_min_y = '214783.87'
+conf_filter_type= 'select_equal'
 conf_apply_filter_value = '1'
+conf_max_x = '398892.19'
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'Yifang')
+conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_tile_mesh_size = '10.'
+conf_validate_precision = '0.001'
+conf_local_tmp = pathlib.Path('/tmp')
+conf_max_y = '726783.87'
     
 for t in tiles:
     features = [conf_feature_name]
