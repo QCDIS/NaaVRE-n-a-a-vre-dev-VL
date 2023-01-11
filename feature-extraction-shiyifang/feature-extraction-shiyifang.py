@@ -106,6 +106,10 @@ for t in tiles:
 Feature_Extraction_output = 0
 
 import json
+filename = "/tmp/features_" + id + ".json"
+file_features = open(filename, "w")
+file_features.write(json.dumps(features))
+file_features.close()
 filename = "/tmp/Feature_Extraction_output_" + id + ".json"
 file_Feature_Extraction_output = open(filename, "w")
 file_Feature_Extraction_output.write(json.dumps(Feature_Extraction_output))
