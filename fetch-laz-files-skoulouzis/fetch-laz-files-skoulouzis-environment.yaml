@@ -7,4 +7,5 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - laserfarm
+  - pip:
+    - git+https://github.com/QCDIS/Laserfarm.git
