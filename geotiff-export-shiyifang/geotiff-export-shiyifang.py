@@ -7,9 +7,9 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--Feature_Extraction_output', action='store', type=int, required='True', dest='Feature_Extraction_output')
-
 arg_parser.add_argument('--features', action='store', type=str, required='True', dest='features')
+
+arg_parser.add_argument('--remote_path_targets', action='store', type=str, required='True', dest='remote_path_targets')
 
 arg_parser.add_argument('--param_hostname', action='store', type=str, required='True', dest='param_hostname')
 arg_parser.add_argument('--param_login', action='store', type=str, required='True', dest='param_login')
@@ -20,9 +20,9 @@ print(args)
 
 id = args.id
 
-Feature_Extraction_output = args.Feature_Extraction_output
 import json
 features = json.loads(args.features.replace('\'','').replace('[','["').replace(']','"]'))
+remote_path_targets = args.remote_path_targets
 
 param_hostname = args.param_hostname
 param_login = args.param_login
@@ -40,7 +40,7 @@ conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'myname')
 conf_local_tmp = pathlib.Path('/tmp')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 
-print(Feature_Extraction_output)
+remote_path_targets
 
 feature = features
 
