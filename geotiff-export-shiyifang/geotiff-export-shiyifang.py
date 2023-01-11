@@ -7,8 +7,6 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--features', action='store', type=str, required='True', dest='features')
-
 arg_parser.add_argument('--remote_path_targets', action='store', type=str, required='True', dest='remote_path_targets')
 
 arg_parser.add_argument('--param_hostname', action='store', type=str, required='True', dest='param_hostname')
@@ -20,8 +18,6 @@ print(args)
 
 id = args.id
 
-import json
-features = json.loads(args.features.replace('\'','').replace('[','["').replace(']','"]'))
 remote_path_targets = args.remote_path_targets
 
 param_hostname = args.param_hostname
@@ -42,7 +38,6 @@ conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login,
 
 remote_path_targets
 
-feature = features
 
 remote_path_geotiffs = conf_remote_path_ahn.parent / 'geotiffs'
 
@@ -56,6 +51,6 @@ geotiff_export_input = {
     'cleanlocalfs': {}   
 }
 
-writer = GeotiffWriter(input_dir=conf_feature_name, bands=conf_feature_name,label=conf_feature_name).config(geotiff_export_input).setup_webdav_client(conf_wd_opts)
+writer = GeotiffWriter(input_dir=conf_feature_name, bands=conf_feature_name, label=conf_feature_name).config(geotiff_export_input).setup_webdav_client(conf_wd_opts)
 writer.run()
 
