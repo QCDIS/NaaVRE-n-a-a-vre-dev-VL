@@ -69,7 +69,8 @@ for file in split_laz_files:
     retiler_output = retiler.run()
     
     
-remote_path_retiled = conf_remote_path_retiled
+remote_path_retiled = conf_remote_path_retiled.as_posix()
+print(type(remote_path_retiled))
 
 import json
 filename = "/tmp/remote_path_retiled_" + id + ".json"
