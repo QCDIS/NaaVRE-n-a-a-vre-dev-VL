@@ -108,10 +108,6 @@ remote_path_targets = conf_remote_path_targets.as_posix()
 print(type(remote_path_targets))
 
 import json
-filename = "/tmp/features_" + id + ".json"
-file_features = open(filename, "w")
-file_features.write(json.dumps(features))
-file_features.close()
 filename = "/tmp/remote_path_targets_" + id + ".json"
 file_remote_path_targets = open(filename, "w")
 file_remote_path_targets.write(json.dumps(remote_path_targets))
