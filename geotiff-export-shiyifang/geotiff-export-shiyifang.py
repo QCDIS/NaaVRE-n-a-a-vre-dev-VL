@@ -25,15 +25,15 @@ param_login = args.param_login
 param_password = args.param_password
 
 conf_feature_name = 'perc_95_normalized_height'
-conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
+conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'YF')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_remote_path_geotiffs = pathlib.Path( '/webdav/LAZ' + '/geotiffs_'+ 'Yifang')
+conf_remote_path_geotiffs = pathlib.Path( '/webdav/LAZ' + '/geotiffs_'+ 'YF')
 conf_local_tmp = pathlib.Path('/tmp')
 
 conf_feature_name = 'perc_95_normalized_height'
-conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
+conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'YF')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_remote_path_geotiffs = pathlib.Path( '/webdav/LAZ' + '/geotiffs_'+ 'Yifang')
+conf_remote_path_geotiffs = pathlib.Path( '/webdav/LAZ' + '/geotiffs_'+ 'YF')
 conf_local_tmp = pathlib.Path('/tmp')
 
 remote_path_targets
