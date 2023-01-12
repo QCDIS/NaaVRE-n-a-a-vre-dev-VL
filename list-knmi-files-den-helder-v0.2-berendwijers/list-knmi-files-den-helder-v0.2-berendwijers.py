@@ -7,6 +7,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--param_api_key', action='store', type=str, required='True', dest='param_api_key')
 
 args = arg_parser.parse_args()
 print(args)
@@ -14,6 +15,7 @@ print(args)
 id = args.id
 
 
+param_api_key = args.param_api_key
 
 
 
