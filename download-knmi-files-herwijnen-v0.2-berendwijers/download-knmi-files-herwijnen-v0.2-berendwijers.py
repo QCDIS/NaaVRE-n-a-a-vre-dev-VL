@@ -25,7 +25,7 @@ param_api_key = args.param_api_key
 
 radar_code = 'NL/HRW'
 conf_download_dir = f'./data/PVOL/NL/HRW'
-api_url = api_url_herwijnen = 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files'
+api_url = 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files'
 for dataset_file in dataset_files:
     filename = dataset_file[0]
     endpoint = f"{api_url}/{filename}/url"
