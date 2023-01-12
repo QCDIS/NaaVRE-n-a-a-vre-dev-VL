@@ -1,5 +1,5 @@
-from pathlib import Path
 import requests
+from pathlib import Path
 
 import argparse
 arg_parser = argparse.ArgumentParser()
