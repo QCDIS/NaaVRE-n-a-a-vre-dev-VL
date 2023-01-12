@@ -1,7 +1,7 @@
-import fnmatch
-from laserfarm.remote_utils import list_remote
 from laserfarm.remote_utils import get_wdclient
+import fnmatch
 import pathlib
+from laserfarm.remote_utils import list_remote
 
 import argparse
 arg_parser = argparse.ArgumentParser()
