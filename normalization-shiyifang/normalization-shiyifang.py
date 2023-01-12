@@ -1,7 +1,7 @@
 from laserfarm import DataProcessing
+import pathlib
 import json
 import copy
-import pathlib
 
 import argparse
 arg_parser = argparse.ArgumentParser()
@@ -27,15 +27,15 @@ param_hostname = args.param_hostname
 param_login = args.param_login
 param_password = args.param_password
 
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'YF')
-conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 conf_local_tmp = pathlib.Path('/tmp')
-conf_remote_path_norm = pathlib.Path( '/webdav/LAZ' + '/norm_'+ 'YF')
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'Yifang')
+conf_remote_path_norm = pathlib.Path( '/webdav/LAZ' + '/norm_'+ 'Yifang')
+conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'YF')
-conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 conf_local_tmp = pathlib.Path('/tmp')
-conf_remote_path_norm = pathlib.Path( '/webdav/LAZ' + '/norm_'+ 'YF')
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'Yifang')
+conf_remote_path_norm = pathlib.Path( '/webdav/LAZ' + '/norm_'+ 'Yifang')
+conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 
 remote_path_norm = str(conf_remote_path_norm)
 
