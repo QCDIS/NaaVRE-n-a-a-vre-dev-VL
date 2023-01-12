@@ -1,0 +1,14 @@
+name: venv
+channels:
+  - conda-forge
+  - defaults
+  - pytorch
+  - fastai
+dependencies:
+  - pip
+  - python>=3.8
+  - h5py
+  - matplotlib.pyplot
+  - wradlib
+  - pandas
+  - pyproj
