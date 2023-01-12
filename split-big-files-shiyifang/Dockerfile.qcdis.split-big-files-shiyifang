@@ -1,6 +1,7 @@
 
 FROM qcdis/miniconda3-pdal AS build
 COPY split-big-files-shiyifang-environment.yaml .
+RUN conda install -c conda-forge mamba
 RUN mamba env update -f split-big-files-shiyifang-environment.yaml
 RUN conda-pack -n venv -o /tmp/env.tar && \
     mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
