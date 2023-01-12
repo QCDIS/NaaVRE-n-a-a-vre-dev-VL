@@ -8,7 +8,7 @@ dependencies:
   - pip
   - python>=3.8
   - h5py
-  - matplotlib.pyplot
+  - matplotlib
   - wradlib
   - pandas
   - pyproj
