@@ -1,4 +1,3 @@
-import os
 from laserfarm import DataProcessing
 import pathlib
 
@@ -26,37 +25,38 @@ param_hostname = args.param_hostname
 param_login = args.param_login
 param_password = args.param_password
 
-conf_local_tmp = pathlib.Path('/tmp')
-conf_filter_type= 'select_equal'
-conf_apply_filter_value = '1'
-conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_feature_name = 'perc_95_normalized_height'
-conf_validate_precision = '0.001'
-conf_max_y = '726783.87'
-conf_attribute = 'raw_classification'
 conf_n_tiles_side = '512'
-conf_max_x = '398892.19'
-conf_min_y = '214783.87'
-conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
-conf_remote_path_norm = pathlib.Path( '/webdav/LAZ' + '/norm_'+ 'Yifang')
+conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_max_y = '726783.87'
+conf_local_tmp = pathlib.Path('/tmp')
 conf_tile_mesh_size = '10.'
+conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'Yifang')
+conf_attribute = 'raw_classification'
+conf_max_x = '398892.19'
+conf_feature_name = 'perc_95_normalized_height'
+conf_filter_type= 'select_equal'
+conf_min_y = '214783.87'
+conf_apply_filter_value = '1'
+conf_validate_precision = '0.001'
 conf_min_x = '-113107.81'
 
-conf_local_tmp = pathlib.Path('/tmp')
-conf_filter_type= 'select_equal'
-conf_apply_filter_value = '1'
-conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_feature_name = 'perc_95_normalized_height'
-conf_validate_precision = '0.001'
-conf_max_y = '726783.87'
-conf_attribute = 'raw_classification'
 conf_n_tiles_side = '512'
-conf_max_x = '398892.19'
-conf_min_y = '214783.87'
-conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
-conf_remote_path_norm = pathlib.Path( '/webdav/LAZ' + '/norm_'+ 'Yifang')
+conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_max_y = '726783.87'
+conf_local_tmp = pathlib.Path('/tmp')
 conf_tile_mesh_size = '10.'
+conf_remote_path_targets = pathlib.Path( '/webdav/LAZ' + '/targets_'+ 'Yifang')
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+ 'Yifang')
+conf_attribute = 'raw_classification'
+conf_max_x = '398892.19'
+conf_feature_name = 'perc_95_normalized_height'
+conf_filter_type= 'select_equal'
+conf_min_y = '214783.87'
+conf_apply_filter_value = '1'
+conf_validate_precision = '0.001'
 conf_min_x = '-113107.81'
+    
 for t in tiles:
     features = [conf_feature_name]
 
@@ -68,11 +68,11 @@ for t in tiles:
         'min_y': float(conf_min_y),
         'max_y': float(conf_max_y),
         'n_tiles_side': int(conf_n_tiles_side)
-        }
+    }
 
     feature_extraction_input = {
         'setup_local_fs': {'tmp_folder': conf_local_tmp.as_posix()},
-        'pullremote': conf_remote_path_norm.as_posix(),
+        'pullremote': conf_remote_path_retiled.as_posix(),
         'load': {'attributes': [conf_attribute]},
         'normalize': 1,
         'apply_filter': {
@@ -97,14 +97,12 @@ for t in tiles:
         },
         'pushremote': conf_remote_path_targets.as_posix(),
     #     'cleanlocalfs': {}
-     }
+    }
+    idx = (t.split('_')[1:])
 
-
-    stem, _ = os.path.splitext(t)
-    idx = [int(el) for el in (stem.split('_')[1:])]
-    processing = DataProcessing(t, tile_index=idx,label=stem).config(feature_extraction_input).setup_webdav_client(conf_wd_opts)
+    processing = DataProcessing(t, tile_index=idx,label=t).config(feature_extraction_input).setup_webdav_client(conf_wd_opts)
     processing.run()
-
+    
 remote_path_targets = conf_remote_path_targets.as_posix()
 
 print(type(remote_path_targets))
