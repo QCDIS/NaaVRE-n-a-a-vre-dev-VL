@@ -1,4 +1,3 @@
-from laserfarm import Retiler
 import pathlib
 
 import argparse
@@ -52,7 +51,7 @@ conf_local_tmp = pathlib.Path('/tmp')
             }
 
             for file in split_laz_files:
-                                
+                print(file)                
 
 import json
 filename = "/tmp/retiler_output_" + id + ".json"
