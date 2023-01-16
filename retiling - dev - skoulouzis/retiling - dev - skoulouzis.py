@@ -29,6 +29,7 @@ split_laz_files
 
 for file in split_laz_files:
     print(file)
+    retiler_output = file
 
 import json
 filename = "/tmp/retiler_output_" + id + ".json"
