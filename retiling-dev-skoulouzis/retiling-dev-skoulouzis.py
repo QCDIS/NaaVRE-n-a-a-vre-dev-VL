@@ -27,25 +27,25 @@ param_login = args.param_login
 param_password = args.param_password
 param_username = args.param_username
 
-conf_local_tmp = pathlib.Path('/tmp')
-conf_n_tiles_side = '512'
-conf_max_x = '398892.19'
 conf_min_x = '-113107.81'
-conf_min_y = '214783.87'
-conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+param_username)
+conf_min_y = '214783.87'
 conf_max_y = '726783.87'
+conf_max_x = '398892.19'
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+param_username)
+conf_n_tiles_side = '512'
+conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
+conf_local_tmp = pathlib.Path('/tmp')
 
-conf_local_tmp = pathlib.Path('/tmp')
-conf_n_tiles_side = '512'
-conf_max_x = '398892.19'
 conf_min_x = '-113107.81'
-conf_min_y = '214783.87'
-conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+param_username)
+conf_min_y = '214783.87'
 conf_max_y = '726783.87'
+conf_max_x = '398892.19'
+conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+param_username)
+conf_n_tiles_side = '512'
+conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
+conf_local_tmp = pathlib.Path('/tmp')
 split_laz_files
 remote_path_retiled = str(conf_remote_path_retiled)
 
@@ -68,7 +68,6 @@ retiling_input = {
 }
 
 for file in split_laz_files:
-    print('Retiling: '+file)
     retiler = Retiler(file.replace('"',''),label=file).config(retiling_input).setup_webdav_client(conf_wd_opts)
     retiler_output = retiler.run()
 
@@ -77,7 +76,3 @@ filename = "/tmp/retiler_output_" + id + ".json"
 file_retiler_output = open(filename, "w")
 file_retiler_output.write(json.dumps(retiler_output))
 file_retiler_output.close()
-filename = "/tmp/remote_path_retiled_" + id + ".json"
-file_remote_path_retiled = open(filename, "w")
-file_remote_path_retiled.write(json.dumps(remote_path_retiled))
-file_remote_path_retiled.close()
