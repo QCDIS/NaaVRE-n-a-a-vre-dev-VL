@@ -28,30 +28,11 @@ conf_n_tiles_side = '512'
 conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
 conf_local_tmp = pathlib.Path('/tmp')
 
- # Retiling
-            split_laz_files
-            remote_path_retiled = str(conf_remote_path_retiled)
+split_laz_files
+remote_path_retiled = str(conf_remote_path_retiled)
 
-            grid_retile = {
-                'min_x': float(conf_min_x),
-                'max_x': float(conf_max_x),
-                'min_y': float(conf_min_y),
-                'max_y': float(conf_max_y),
-                'n_tiles_side': int(conf_n_tiles_side)
-            }
-
-            retiling_input = {
-                'setup_local_fs': {'tmp_folder': conf_local_tmp.as_posix()},
-                'pullremote': conf_remote_path_split.as_posix(),
-                'set_grid': grid_retile,
-                'split_and_redistribute': {},
-                'validate': {},
-                'pushremote': conf_remote_path_retiled.as_posix(),
-                'cleanlocalfs': {}
-            }
-
-            for file in split_laz_files:
-                print(file)                
+for file in split_laz_files:
+    print(file)
 
 import json
 filename = "/tmp/retiler_output_" + id + ".json"
