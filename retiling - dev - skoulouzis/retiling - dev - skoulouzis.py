@@ -26,7 +26,6 @@ conf_n_tiles_side = '512'
 conf_local_tmp = pathlib.Path('/tmp')
 
 split_laz_files
-remote_path_retiled = str(conf_remote_path_retiled)
 
 for file in split_laz_files:
     print(file)
