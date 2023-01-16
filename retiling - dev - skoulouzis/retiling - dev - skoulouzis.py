@@ -52,9 +52,7 @@ conf_local_tmp = pathlib.Path('/tmp')
             }
 
             for file in split_laz_files:
-                retiler = Retiler(file.replace('"', ''), label=file).config(retiling_input).setup_webdav_client(
-                    conf_wd_opts)
-                retiler_output = retiler.run()
+                                
 
 import json
 filename = "/tmp/retiler_output_" + id + ".json"
