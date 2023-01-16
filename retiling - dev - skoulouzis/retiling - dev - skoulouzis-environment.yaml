@@ -7,4 +7,3 @@ channels:
 dependencies:
   - pip
   - python>=3.8
-  - laserfarm
