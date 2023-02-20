@@ -1,0 +1,16 @@
+name: venv
+channels:
+  - conda-forge
+  - defaults
+  - pytorch
+  - fastai
+dependencies:
+  - pip
+  - python>=3.8
+  - variational_autoencoder_YD
+  - pandas
+  - my_data_generator
+  - tensorflow
+  - utils_image_retrieval_YD
+  - flwr
+  - sklearn
