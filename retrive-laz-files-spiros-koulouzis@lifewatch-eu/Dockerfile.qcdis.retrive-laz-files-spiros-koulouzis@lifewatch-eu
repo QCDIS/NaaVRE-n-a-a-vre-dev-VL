@@ -1,5 +1,5 @@
 
-FROM qcdis/miniconda3-pdal AS build
+FROM qcdis/miniconda3-multiply AS build
 COPY retrive-laz-files-spiros-koulouzis@lifewatch-eu-environment.yaml .
 RUN conda install -c conda-forge mamba
 RUN mamba env update -f retrive-laz-files-spiros-koulouzis@lifewatch-eu-environment.yaml
