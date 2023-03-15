@@ -7,16 +7,15 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--working_directory_name', action='store', type=str, required='True', dest='working_directory_name')
-
+arg_parser.add_argument('--param_working_directory_name', action='store', type=str, required='True', dest='param_working_directory_name')
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
-working_directory_name = args.working_directory_name
 
+param_working_directory_name = args.param_working_directory_name
 
 
 def get_working_dir(dir_name: str) -> str:
@@ -27,7 +26,7 @@ def get_working_dir(dir_name: str) -> str:
     os.makedirs(working_dir)
     return working_dir
 
-name = working_directory_name
+name = param_working_directory_name
 working_dir = get_working_dir(name)
 
 print(working_dir)
