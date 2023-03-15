@@ -1,5 +1,5 @@
 
-FROM qcdis/miniconda3-pdal AS build
+FROM Laserfarm AS build
 COPY test-retiling-dev-skoulouzis-environment.yaml .
 RUN conda install -c conda-forge mamba
 RUN mamba env update -f test-retiling-dev-skoulouzis-environment.yaml
