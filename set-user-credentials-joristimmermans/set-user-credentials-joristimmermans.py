@@ -19,8 +19,6 @@ param_AWS_access_key = args.param_AWS_access_key
 param_AWS_secret_key = args.param_AWS_secret_key
 
 
-
-
 config = SHConfig()
 config.aws_access_key_id = param_AWS_access_key
 config.aws_secret_access_key = param_AWS_secret_key
