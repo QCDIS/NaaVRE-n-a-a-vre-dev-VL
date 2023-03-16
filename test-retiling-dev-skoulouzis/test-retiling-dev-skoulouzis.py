@@ -18,12 +18,12 @@ import json
 split_laz_files = json.loads(args.split_laz_files.replace('\'','').replace('[','["').replace(']','"]'))
 
 
-conf_min_x = '-113107.81'
-conf_min_y = '214783.87'
-conf_max_y = '726783.87'
-conf_max_x = '398892.19'
-conf_n_tiles_side = '512'
-conf_local_tmp = pathlib.Path('/tmp')
+conf_min_x = "-113107.81"
+conf_min_y = "214783.87"
+conf_max_y = "726783.87"
+conf_max_x = "398892.19"
+conf_n_tiles_side = "512"
+conf_local_tmp = pathlib.Path("/tmp")
 
 split_laz_files
 
