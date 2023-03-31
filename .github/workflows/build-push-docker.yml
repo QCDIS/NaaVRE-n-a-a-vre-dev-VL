@@ -1,4 +1,4 @@
-name: ${{github.event.inputs.id}}
+name: Build_continers
 
 on:
   workflow_dispatch:
