@@ -8,5 +8,5 @@ dependencies:
   - pip
   - python>=3.8
   - laspy
-  - webdavclient3
   - numpy
+  - webdavclient3
