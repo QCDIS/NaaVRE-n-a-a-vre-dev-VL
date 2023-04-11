@@ -1,5 +1,5 @@
 
-FROM qcdis/miniconda3 AS build
+FROM qcdis/miniconda3-distributed-learning AS build
 COPY add-chronis98-environment.yaml .
 RUN conda install -c conda-forge mamba
 RUN mamba env update -f add-chronis98-environment.yaml
