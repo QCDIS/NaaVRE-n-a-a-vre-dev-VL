@@ -1,5 +1,5 @@
-from laserfarm.remote_utils import get_wdclient
 import pathlib
+from laserfarm.remote_utils import get_wdclient
 from laserfarm.remote_utils import list_remote
 
 import argparse
