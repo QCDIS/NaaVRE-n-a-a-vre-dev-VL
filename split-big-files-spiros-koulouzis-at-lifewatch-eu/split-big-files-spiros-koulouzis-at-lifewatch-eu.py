@@ -1,7 +1,7 @@
-import os
+import numpy as np
 import laspy
 import pathlib
-import numpy as np
+import os
 from webdav3.client import Client
 
 import argparse
@@ -31,18 +31,17 @@ param_password = args.param_password
 param_username = args.param_username
 
 conf_max_filesize = '262144000'  # desired max file size (in bytes)
+conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
+conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 conf_remote_path_ahn =  '/webdav/LAZ'
 conf_laz_compression_factor = '7'
-conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+param_username)
 
 conf_max_filesize = '262144000'  # desired max file size (in bytes)
+conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
+conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 conf_remote_path_ahn =  '/webdav/LAZ'
 conf_laz_compression_factor = '7'
-conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_remote_path_split = pathlib.Path( '/webdav/LAZ' + '/split_'+param_username)
-conf_remote_path_retiled = pathlib.Path( '/webdav/LAZ' + '/retiled_'+param_username)
+
 
 def save_chunk_to_laz_file(in_filename, 
                            out_filename, 
@@ -85,8 +84,9 @@ client.mkdir(conf_remote_path_split.as_posix())
 
 remote_path_split = conf_remote_path_split
 
+
 for file in laz_files:
-    print('Splitting: '+file)
+    print('Splitting: '+file )
     client.download_sync(remote_path=os.path.join(conf_remote_path_ahn,file), local_path=file)
     inps = split_strategy(file, int(conf_max_filesize))
     for inp in inps:
@@ -97,11 +97,11 @@ for file in laz_files:
         if not f.endswith('.LAZ'):
             continue
         os.remove(os.path.join('.', f))
-        
-remote_path_retiled = str(conf_remote_path_retiled)
+    
+split_laz_files = laz_files
 
 import json
-filename = "/tmp/remote_path_retiled_" + id + ".json"
-file_remote_path_retiled = open(filename, "w")
-file_remote_path_retiled.write(json.dumps(remote_path_retiled))
-file_remote_path_retiled.close()
+filename = "/tmp/split_laz_files_" + id + ".json"
+file_split_laz_files = open(filename, "w")
+file_split_laz_files.write(json.dumps(split_laz_files))
+file_split_laz_files.close()
