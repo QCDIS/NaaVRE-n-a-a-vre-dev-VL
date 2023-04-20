@@ -2,13 +2,15 @@ name: venv
 channels:
   - conda-forge
   - defaults
+  - pytorch
+  - fastai
 dependencies:
   - pip
-  - pip:
-    - opencv-python-headless
-    - flwr
-    - torchvision
-    - sklearn
-    - numpy==1.23.0
-    - torch
-    - pandas
+  - python>=3.8
+  - numpy
+  - torchvision
+  - pandas
+  - torch
+  - flwr
+  - sklearn
+  - opencv-python-headless
