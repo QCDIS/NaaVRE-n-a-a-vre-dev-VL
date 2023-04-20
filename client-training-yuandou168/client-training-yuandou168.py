@@ -1,30 +1,40 @@
-from collections import OrderedDict
-import flwr as fl
-import torchvision.models as models
 import pandas as pd
 from sklearn.metrics import confusion_matrix
+import numpy as np
+import ssl
 import torch
 import cv2
-import numpy as np
+import torch.nn as nn
+import torchvision.models as models
 from torch.utils.data import DataLoader
 import time
-import ssl
-import torch.nn as nn
+from collections import OrderedDict
+import flwr as fl
+
 import argparse
 arg_parser = argparse.ArgumentParser()
 
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
-arg_parser.add_argument('--input_data_path', action='store' , type=str , required='True', dest='input_data_path')
-arg_parser.add_argument('--server_IP_port', action='store' , type=str , required='True', dest='server_IP_port')
+
+arg_parser.add_argument('--aggregator_address', action='store', type=str, required='True', dest='aggregator_address')
+
+arg_parser.add_argument('--batch_size', action='store', type=int, required='True', dest='batch_size')
+
+arg_parser.add_argument('--epochs', action='store', type=int, required='True', dest='epochs')
+
+arg_parser.add_argument('--input_data_path', action='store', type=str, required='True', dest='input_data_path')
 
 
 args = arg_parser.parse_args()
+print(args)
 
 id = args.id
 
+aggregator_address = args.aggregator_address
+batch_size = args.batch_size
+epochs = args.epochs
 input_data_path = args.input_data_path
-server_IP_port = args.server_IP_port
 
 
 
@@ -39,7 +49,11 @@ print(DEVICE)
 
 input_data_path = input_data_path
 
-server_IP_port = server_IP_port
+epochs = epochs
+
+batch_size = batch_size
+aggregator_address = aggregator_address
+
 
 
 def load_images(df_data, dir_data, input_shape):
@@ -227,7 +241,7 @@ class HistologyClient(fl.client.NumPyClient):
         self.model.load_state_dict(state_dict, strict=True)
     def fit(self, parameters, config):
         self.set_parameters(parameters)
-        train(self.model, self.trainloader, self.valloader, epochs=10)
+        train(self.model, self.trainloader, self.valloader, epochs=epochs)
         return self.get_parameters(), self.num_examples["trainset"], {}
     def evaluate(self, parameters, config):
         self.set_parameters(parameters)
@@ -238,7 +252,7 @@ class HistologyClient(fl.client.NumPyClient):
 
 start_time = time.time()
 client = HistologyClient(net, trainloader, valloader, testloader, num_examples)
-fl.client.start_numpy_client(server_IP_port, client=client, grpc_max_message_length=895_870_912)
+fl.client.start_numpy_client(aggregator_address, client=client, grpc_max_message_length=895_870_912)
 finish_time = time.time()
 
 print("==== TOTAL TIME TO TRAIN THE FEDERATION: ", finish_time-start_time)
