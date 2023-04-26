@@ -1,5 +1,5 @@
-from laserfarm import Retiler
 import pathlib
+from laserfarm import Retiler
 
 import argparse
 arg_parser = argparse.ArgumentParser()
@@ -35,15 +35,15 @@ param_min_y = args.param_min_y
 param_n_tiles_side = args.param_n_tiles_side
 param_password = args.param_password
 
-conf_remote_path_ahn = pathlib.Path('/webdav/ahn')
-conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_local_tmp = pathlib.Path('/tmp')
 conf_remote_path_retiled = pathlib.Path('/webdav/retiled/')
+conf_local_tmp = pathlib.Path('/tmp')
+conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_remote_path_ahn = pathlib.Path('/webdav/ahn')
 
-conf_remote_path_ahn = pathlib.Path('/webdav/ahn')
-conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-conf_local_tmp = pathlib.Path('/tmp')
 conf_remote_path_retiled = pathlib.Path('/webdav/retiled/')
+conf_local_tmp = pathlib.Path('/tmp')
+conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_remote_path_ahn = pathlib.Path('/webdav/ahn')
 
 
 
