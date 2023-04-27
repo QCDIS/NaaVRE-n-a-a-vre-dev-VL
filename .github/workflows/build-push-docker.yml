@@ -29,19 +29,53 @@ jobs:
     runs-on: ubuntu-latest
     name: ${{github.event.inputs.id}}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print variables
+        run: |
+          echo ${{ github.event.inputs.build_dir }}
+          echo ${{ github.event.inputs.dockerfile }}
+          echo ${{ github.event.inputs.image_repo }}
+          echo ${{ github.event.inputs.image_tag }}
+
+      - name: Cache Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ github.event.inputs.build_dir }}
+          push: false
+          cache-from: |
+            type=registry,ref=${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+          cache-to: |
+            type=registry,ref=${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest,mode=max
+        if : github.event.inputs.build_dir != .github/workflows"
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - uses: actions/checkout@v2
-      - name: Build and push image
-        run:  |
-          echo ${{ github.event.inputs.dockerfile }} --tag ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
-          dir="${{ github.event.inputs.build_dir }}"
-          if [ "$dir" != ".github/workflows" ]; then
-            cd $dir
-            docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
-            docker push ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
-          fi
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ github.event.inputs.build_dir }}
+          push: true
+          cache-from: |
+            type=registry,ref=${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+          cache-to: |
+            type=registry,ref=${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest,mode=max
+          tags: ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+        if : github.event.inputs.build_dir != .github/workflows"
+
+
+#      - uses: actions/checkout@v2
+#      - name: Build and push image
+#        run:  |
+#          echo ${{ github.event.inputs.dockerfile }} --tag ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
+#          dir="${{ github.event.inputs.build_dir }}"
+#          if [ "$dir" != ".github/workflows" ]; then
+#            cd $dir
+#            docker build . --file ${{ github.event.inputs.dockerfile }} --tag ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
+#            docker push ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
+#          fi
