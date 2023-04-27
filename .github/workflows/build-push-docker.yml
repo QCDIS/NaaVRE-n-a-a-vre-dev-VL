@@ -24,19 +24,47 @@ on:
         description: 'run identifier'
         required: false
 
+
+
 jobs:
   build-push:
     runs-on: ubuntu-latest
-    name: ${{github.event.inputs.id}}
     steps:
-      - uses: whoan/docker-build-with-cache-action@v5
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          image_name: ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}
-          dockerfile: ${{ github.event.inputs.dockerfile }}
-          context: ${{ github.event.inputs.build_dir }}
 
+      - name: Cache Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ github.event.inputs.build_dir }}
+          push: false
+          cache-from: |
+            type=registry,ref=${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+          cache-to: |
+            type=registry,ref=my-docker-image:latest,mode=max
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ github.event.inputs.build_dir }}
+          push: true
+          cache-from: |
+            type=registry,ref=${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+          cache-to: |
+            type=registry,ref=m${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest,mode=max
+          tags: ${{ github.event.inputs.image_repo }}/${{ github.event.inputs.image_tag }}:latest
+
+
+
+#    runs-on: ubuntu-latest
+#    name: ${{github.event.inputs.id}}
+#    steps:
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v1
 #        with:
