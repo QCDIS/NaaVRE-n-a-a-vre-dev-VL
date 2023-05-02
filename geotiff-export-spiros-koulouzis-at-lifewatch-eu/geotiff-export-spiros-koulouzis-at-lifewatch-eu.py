@@ -18,8 +18,7 @@ print(args)
 
 id = args.id
 
-import json
-remote_path_targets = json.loads(args.remote_path_targets.replace('\'','').replace('[','["').replace(']','"]'))
+remote_path_targets = args.remote_path_targets
 
 param_hostname = args.param_hostname
 param_login = args.param_login
