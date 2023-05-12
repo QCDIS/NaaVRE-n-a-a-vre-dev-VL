@@ -22,7 +22,7 @@ if(is.na(id){
 }
 
 # source code 
-a <- 5 * b * 6
+a <- 5 * b * 12
 
 # capturing outputs 
 file <- file(paste0('/tmp/a_', id, '.json')) 
