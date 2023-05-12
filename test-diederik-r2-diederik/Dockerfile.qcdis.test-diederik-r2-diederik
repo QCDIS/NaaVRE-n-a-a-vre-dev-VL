@@ -1,0 +1,8 @@
+FROM jupyter/r-notebook:70178b8e48d7
+
+USER root 
+
+RUN R -e "install.packages('optparse', repos='http://cran.rstudio.com')" 
+
+RUN mkdir -p /app 
+COPY test-diederik-r2-diederik.R /app
