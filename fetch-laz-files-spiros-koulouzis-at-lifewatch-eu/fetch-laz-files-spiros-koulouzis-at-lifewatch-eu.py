@@ -1,6 +1,6 @@
 from laserfarm.remote_utils import list_remote
-import pathlib
 from laserfarm.remote_utils import get_wdclient
+import pathlib
 
 import argparse
 arg_parser = argparse.ArgumentParser()
