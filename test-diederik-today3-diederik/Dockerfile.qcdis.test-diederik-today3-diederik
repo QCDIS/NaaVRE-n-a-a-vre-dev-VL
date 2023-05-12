@@ -1,0 +1,7 @@
+FROM jupyter/r-notebook:70178b8e48d7
+
+USER root 
+
+
+RUN mkdir -p /app 
+COPY test-diederik-today3-diederik.R /app
