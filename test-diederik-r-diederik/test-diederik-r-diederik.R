@@ -10,14 +10,14 @@ option_list = list(
 # set input parameters accordingly 
 opt = parse_args(OptionParser(option_list=option_list)) 
 library(jsonlite) 
-a = fromJSON(opt$a) 
-id = fromJSON(opt$id) 
+a = opt$a 
+id = opt$id 
 
 # check if the fields are set 
-if(is.na(a){ 
+if(is.na(a)){ 
    stop('the `a` parameter is not correctly set. See script usage (--help)') 
 }
-if(is.na(id){ 
+if(is.na(id)){ 
    stop('the `id` parameter is not correctly set. See script usage (--help)') 
 }
 
