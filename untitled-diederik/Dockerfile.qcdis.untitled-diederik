@@ -1,14 +1,12 @@
+FROM jupyter/r-notebook:70178b8e48d7
 
-FROM jupyter/r-notebook:70178b8e48d7 AS build
-COPY untitled-diederik-environment.yaml .
-RUN conda env update -n venv -f untitled-diederik-environment.yaml
-RUN conda-pack -n venv -o /tmp/env.tar && \
-    mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
-    rm /tmp/env.tar
-RUN /venv/bin/conda-unpack
+USER root 
 
-FROM debian:buster AS runtime
-RUN apt update -y && apt upgrade -y && apt install jq -y
-COPY --from=build /venv /venv
-COPY untitled-diederik.py .
+RUN R -e "install.packages('dplyr', repos='http://cran.rstudio.com')" 
+RUN R -e "install.packages('forcats', repos='http://cran.rstudio.com')" 
+RUN R -e "install.packages('ggplot2', repos='http://cran.rstudio.com')" 
+RUN R -e "install.packages('readr', repos='http://cran.rstudio.com')" 
+RUN R -e "install.packages('optparse', repos='http://cran.rstudio.com')" 
 
+RUN mkdir -p /app 
+COPY untitled-diederik.R /app
