@@ -27,6 +27,12 @@ param_CountingStrategy = opt$param_CountingStrategy
 
 
 
+install.packages("dplyr")
+dplyr = ''
+library(dplyr)
+
+
+
 
 
 if (param_density==1) {param_CountingStrategy <- 'density0'}
@@ -36,6 +42,8 @@ measurementremarks = tolower(df.datain$measurementremarks) # eliminate capital l
 df.datain$measurementremarks <- tolower(df.datain$measurementremarks) # eliminate capital letters
 index = c(1:nrow(df.datain))
 df.datain$index <- c(1:nrow(df.datain)) # needed to restore rows order later
+
+sample_n(df.datain,3)
 
 df.operator<-read.csv('input/2_FILEinformativo_OPERATORE.csv',stringsAsFactors=FALSE,sep = ";", dec = ".") ## load internal database 
 df.operator[df.operator==('no')]<-NA
