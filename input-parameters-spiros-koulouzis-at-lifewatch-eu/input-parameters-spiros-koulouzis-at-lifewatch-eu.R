@@ -66,7 +66,7 @@ if(!'dilutionfactor'%in%names(df.merged))df.merged$dilutionfactor=1
 output_dfmerged = 'output/dfmerged.csv'
 output_dfdatain = 'output/dfdatain.csv'
 write.table(df.merged,paste(output_dfmerged,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-write.table(df.datain,paste(,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
+write.table(df.datain,paste(output_dfdatain,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
 
 
 
