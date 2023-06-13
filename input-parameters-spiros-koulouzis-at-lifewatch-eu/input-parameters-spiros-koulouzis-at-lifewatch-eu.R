@@ -8,9 +8,7 @@ library(jsonlite)
 option_list = list
 
 option_list = list(
-make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--param_CountingStrategy"), action="store", default=NA, type='character', help="my description")
+make_option(c("--id"), action="store", default=NA, type='character', help="my description")
 
 
 )
@@ -20,14 +18,12 @@ opt = parse_args(OptionParser(option_list=option_list))
 
 
 id = opt$id
-param_CountingStrategy = opt$param_CountingStrategy
 
 
 
 
 
-
-install.packages("dplyr")
+install.packages("dplyr",repos = "http://cran.us.r-project.org")
 dplyr = ''
 library(dplyr)
 
@@ -67,8 +63,10 @@ if(!'numberoftransects'%in%names(df.merged))df.merged$numberoftransects==df.merg
 if(!'settlingvolume'%in%names(df.merged))df.merged$settlingvolume=NA
 if(!'dilutionfactor'%in%names(df.merged))df.merged$dilutionfactor=1
 
-write.table(df.merged,paste('output/dfmerged.csv',sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-write.table(df.datain,paste('output/dfdatain.csv',sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
+output_dfmerged = 'output/dfmerged.csv'
+output_dfdatain = 'output/dfdatain.csv'
+write.table(df.merged,paste(output_dfmerged,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
+write.table(df.datain,paste(,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
 
 
 
@@ -81,6 +79,9 @@ writeLines(toJSON(dilutionfactor, auto_unbox=TRUE), file)
 close(file)
 file <- file(paste0('/tmp/index_', id, '.json'))
 writeLines(toJSON(index, auto_unbox=TRUE), file)
+close(file)
+file <- file(paste0('/tmp/output_dfmerged_', id, '.json'))
+writeLines(toJSON(output_dfmerged, auto_unbox=TRUE), file)
 close(file)
 file <- file(paste0('/tmp/numberoftransects_', id, '.json'))
 writeLines(toJSON(numberoftransects, auto_unbox=TRUE), file)
