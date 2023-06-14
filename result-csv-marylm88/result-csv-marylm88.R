@@ -8,156 +8,76 @@ library(jsonlite)
 option_list = list
 
 option_list = list(
-make_option(c("--biovolume"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--BV_calc"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--BV_column"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--CC_calc"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--CC_column"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--cellcarboncontent"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--D_calc"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--D_column"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--density"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--F"), action="store", default=NA, type='character', help="my description"),
-
 make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
 
-make_option(c("--index"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--SA_calc"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--SA_column"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--surfacearea"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--surfacevolumeratio"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--SVR_calc"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--SVR_column"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TBV_calc"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TBV_column"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TCC_calc"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TCC_column"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--totalbiovolume"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--totalcarboncontent"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TraitBiovolume"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TraitCellcarboncontent"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TraitDensity"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TraitSurfacearea"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TraitSurfacevolumeratio"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TraitTotalbiovolume"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--TraitTotalcarboncontent"), action="store", default=NA, type='character', help="my description")
+make_option(c("--output_dfmerged"), action="store", default=NA, type='character', help="my description")
 
 
+make_option(c("--param_biovolume"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_cellcarboncontent"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_datain"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_density"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_surfacearea"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_surfacevolumeratio"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_totalbiovolume"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_totalcarboncontent"), action="store", default=NA, type='character', help="my description")
 )
 
 # set input parameters accordingly
 opt = parse_args(OptionParser(option_list=option_list))
 
 
-biovolume = fromJSON(opt$biovolume)
-BV_calc = fromJSON(opt$BV_calc)
-BV_column = fromJSON(opt$BV_column)
-CC_calc = fromJSON(opt$CC_calc)
-CC_column = fromJSON(opt$CC_column)
-cellcarboncontent = fromJSON(opt$cellcarboncontent)
-D_calc = fromJSON(opt$D_calc)
-D_column = fromJSON(opt$D_column)
-density = fromJSON(opt$density)
-F = opt$F
 id = opt$id
-index = fromJSON(opt$index)
-SA_calc = fromJSON(opt$SA_calc)
-SA_column = fromJSON(opt$SA_column)
-surfacearea = fromJSON(opt$surfacearea)
-surfacevolumeratio = fromJSON(opt$surfacevolumeratio)
-SVR_calc = fromJSON(opt$SVR_calc)
-SVR_column = fromJSON(opt$SVR_column)
-TBV_calc = opt$TBV_calc
-TBV_column = fromJSON(opt$TBV_column)
-TCC_calc = fromJSON(opt$TCC_calc)
-TCC_column = fromJSON(opt$TCC_column)
-totalbiovolume = fromJSON(opt$totalbiovolume)
-totalcarboncontent = fromJSON(opt$totalcarboncontent)
-TraitBiovolume = opt$TraitBiovolume
-TraitCellcarboncontent = opt$TraitCellcarboncontent
-TraitDensity = fromJSON(opt$TraitDensity)
-TraitSurfacearea = opt$TraitSurfacearea
-TraitSurfacevolumeratio = opt$TraitSurfacevolumeratio
-TraitTotalbiovolume = opt$TraitTotalbiovolume
-TraitTotalcarboncontent = opt$TraitTotalcarboncontent
+output_dfmerged = opt$output_dfmerged
+
+param_biovolume = opt$param_biovolume
+param_cellcarboncontent = opt$param_cellcarboncontent
+param_datain = opt$param_datain
+param_density = opt$param_density
+param_surfacearea = opt$param_surfacearea
+param_surfacevolumeratio = opt$param_surfacevolumeratio
+param_totalbiovolume = opt$param_totalbiovolume
+param_totalcarboncontent = opt$param_totalcarboncontent
 
 
 
 
 
-df.datain=read.csv('~/Unisalento/Lifewatch/Phyto_VRE/Script_R/Traits_Computation/dfdatain.csv',stringsAsFactors=F,sep = ";", dec = ".")
+df.datain=read.csv(param_datain,stringsAsFactors=FALSE,sep = ";", dec = ".")
+df.merged=read.csv(output_dfmerged,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
-BV=TraitBiovolume 
-TBV=TraitTotalbiovolume
-D=TraitDensity
-SA=TraitSurfacearea
-SVR=TraitSurfacevolumeratio
-CC=TraitCellcarboncontent
-TCC=TraitTotalcarboncontent
+biovolume = ''
+cellcarboncontent = ''
+surfacearea = ''
 
-if(BV==1) {
-    BV_column=BV_calc
-    if('biovolume'%in%names(df.datain)) df.datain<-subset(df.datain,select=-biovolume) # drop column if already present
-    df.datain$biovolume <- BV_column # write column with the results at the end of the dataframe
+
+if(param_biovolume==1) {
+    if('biovolume'%in%names(df.datain)) df.datain=subset(df.datain,select=-biovolume) # drop column if already present
+    df.datain[,'biovolume'] = df.merged[,'biovolume'] # write column with the results at the end of the dataframe
     }
-if(CC==1) {
-    CC_column=CC_calc
-    if('cellcarboncontent'%in%names(df.datain)) df.datain<-subset(df.datain,select=-cellcarboncontent)
-    df.datain$cellcarboncontent <- CC_column
+if(param_cellcarboncontent==1) {
+    if('cellcarboncontent'%in%names(df.datain)) df.datain=subset(df.datain,select=-cellcarboncontent)
+    df.datain[,'cellcarboncontent'] = df.merged[,'cellcarboncontent']
     }
-if(D==1) {
-    D_column=D_calc
-    df.datain$density <- D_column
+if(param_density==1) {
+    df.datain[,'density'] = df.merged[,'density']
     }
-if(TBV==1) {
-    TBV_column=TBV_calc
-    df.datain$totalbiovolume <- TBV_column
+if(param_totalbiovolume==1) {
+    df.datain[,'totalbiovolume'] = df.merged[,'totalbiovolume']
     }
-if(SA==1) {
-    SA_column=SA_calc
-    if('surfacearea'%in%names(df.datain)) df.datain<-subset(df.datain,select=-surfacearea)
-    df.datain$surfacearea <- SA_column
+if(param_surfacearea==1) {
+    if('surfacearea'%in%names(df.datain)) df.datain=subset(df.datain,select=-surfacearea)
+    df.datain[,'surfacearea'] = df.merged[,'surfacearea']
     }
-if(SVR==1) {
-    SVR_column=SVR_calc
-    df.datain$surfacevolumeratio <- SVR_column
+if(param_surfacevolumeratio==1) {
+    df.datain[,'surfacevolumeratio'] = df.merged[,'surfacevolumeratio']
     }
-if(TCC==1) {
-    TCC_column=TCC_calc
-    df.datain$totalcarboncontent <- TCC_column
+if(param_totalcarboncontent==1) {
+    df.datain[,'totalcarboncontent'] = df.merged[,'totalcarboncontent']
     }
 
-df.datain <- subset(df.datain,select = -index)
 
-write.table(df.datain,paste('~/Unisalento/Lifewatch/Phyto_VRE/Script_R/Traits_Computation/Output/TraitsOutput.csv',sep=''),row.names=F,sep = ";",dec = ".",quote=F) 
+write.table(df.datain,paste('output/TraitsOutput.csv',sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
 
 
 
