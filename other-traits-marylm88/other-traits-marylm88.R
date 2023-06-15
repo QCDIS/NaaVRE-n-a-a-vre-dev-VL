@@ -8,7 +8,9 @@ library(jsonlite)
 option_list = list
 
 option_list = list(
-make_option(c("--id"), action="store", default=NA, type='character', help="my description")
+make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
+
+make_option(c("--output_dfmerged_5"), action="store", default=NA, type='character', help="my description")
 
 
 make_option(c("--param_biovolume"), action="store", default=NA, type='character', help="my description"),
@@ -26,6 +28,7 @@ opt = parse_args(OptionParser(option_list=option_list))
 
 
 id = opt$id
+output_dfmerged_5 = opt$output_dfmerged_5
 
 param_biovolume = opt$param_biovolume
 param_cellcarboncontent = opt$param_cellcarboncontent
@@ -40,8 +43,7 @@ param_totalcarboncontent = opt$param_totalcarboncontent
 
 
 
-
-df.merged=read.csv(output_dfmerged,stringsAsFactors=FALSE,sep = ";", dec = ".")
+df.merged=read.csv(output_dfmerged_5,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
 volumeofsedimentationchamber = '' 
 df.temp = ''
@@ -95,16 +97,16 @@ if(param_density==1){
     df.merged[,'density'] = round((df.merged[,'organismquantity']*1000)/df.merged[,'settlingvolume'],2)
   }
   df.merged[,'density'] = df.merged[,'density']/df.merged[,'dilutionfactor']
-}
+}   
     
-    
+
 
 if(param_totalbiovolume==1){
   if((param_density==0) & (!'density'%in%names(df.merged))) df.merged[,'density']=NA
   if((param_biovolume==0) & (!'biovolume'%in%names(df.merged))) df.merged[,'biovolume']=NA
   df.merged[,'totalbiovolume'] = round(df.merged[,'density']*df.merged[,'biovolume'],2)
 }
-
+    
     
 
 if(param_surfacevolumeratio==1){
@@ -112,7 +114,7 @@ if(param_surfacevolumeratio==1){
   if((param_biovolume==0) & (!'biovolume'%in%names(df.merged))) df.merged[,'biovolume']=NA
   df.merged[,'surfacevolumeratio']=round(df.merged[,'surfacearea']/df.merged[,'biovolume'],2)
 }
-
+    
     
 
 if(param_totalcarboncontent==1){
@@ -120,13 +122,14 @@ if(param_totalcarboncontent==1){
   if((param_cellcarboncontent==0) & (!'cellcarboncontent'%in%names(df.merged))) df.merged[,'cellcarboncontent']=NA
   df.merged[,'totalcarboncontent']=round(df.merged[,'density']*df.merged[,'cellcarboncontent'],2)
 }
+
    
-output_dfmerged = 'output/dfmerged.csv'    
-write.table(df.merged,paste(output_dfmerged,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
+output_dfmerged_6 = 'output/dfmerged.csv'
+write.table(df.merged,output_dfmerged_6,row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
 
 
 
 # capturing outputs
-file <- file(paste0('/tmp/output_dfmerged_', id, '.json'))
-writeLines(toJSON(output_dfmerged, auto_unbox=TRUE), file)
+file <- file(paste0('/tmp/output_dfmerged_6_', id, '.json'))
+writeLines(toJSON(output_dfmerged_6, auto_unbox=TRUE), file)
 close(file)
