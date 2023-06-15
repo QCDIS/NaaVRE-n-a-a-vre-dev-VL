@@ -44,12 +44,12 @@ if(!'numberoftransects'%in%names(df.merged))df.merged[,'numberoftransects']=df.m
 if(!'settlingvolume'%in%names(df.merged))df.merged[,'settlingvolume']=NA
 if(!'dilutionfactor'%in%names(df.merged))df.merged[,'dilutionfactor']=1
 
-output_dfmerged = 'output/dfmerged.csv'
-write.table(df.merged,paste(output_dfmerged,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
+output_dfmerged_1 = 'output/dfmerged.csv'
+write.table(df.merged,output_dfmerged_1,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
 
 
 
 # capturing outputs
-file <- file(paste0('/tmp/output_dfmerged_', id, '.json'))
-writeLines(toJSON(output_dfmerged, auto_unbox=TRUE), file)
+file <- file(paste0('/tmp/output_dfmerged_1_', id, '.json'))
+writeLines(toJSON(output_dfmerged_1, auto_unbox=TRUE), file)
 close(file)
