@@ -10,7 +10,7 @@ option_list = list
 option_list = list(
 make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
 
-make_option(c("--output_dfmerged"), action="store", default=NA, type='character', help="my description")
+make_option(c("--output_dfmerged_6"), action="store", default=NA, type='character', help="my description")
 
 
 make_option(c("--param_biovolume"), action="store", default=NA, type='character', help="my description"),
@@ -28,7 +28,7 @@ opt = parse_args(OptionParser(option_list=option_list))
 
 
 id = opt$id
-output_dfmerged = opt$output_dfmerged
+output_dfmerged_6 = opt$output_dfmerged_6
 
 param_biovolume = opt$param_biovolume
 param_cellcarboncontent = opt$param_cellcarboncontent
@@ -44,7 +44,7 @@ param_totalcarboncontent = opt$param_totalcarboncontent
 
 
 df.datain=read.csv(param_datain,stringsAsFactors=FALSE,sep = ";", dec = ".")
-df.merged=read.csv(output_dfmerged,stringsAsFactors=FALSE,sep = ";", dec = ".")
+df.merged=read.csv(output_dfmerged_6,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
 biovolume = ''
 cellcarboncontent = ''
