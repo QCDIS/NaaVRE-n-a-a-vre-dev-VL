@@ -8,7 +8,9 @@ library(jsonlite)
 option_list = list
 
 option_list = list(
-make_option(c("--id"), action="store", default=NA, type='character', help="my description")
+make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
+
+make_option(c("--output_dfmerged_2"), action="store", default=NA, type='character', help="my description")
 
 
 make_option(c("--param_biovolume"), action="store", default=NA, type='character', help="my description"),
@@ -20,6 +22,7 @@ opt = parse_args(OptionParser(option_list=option_list))
 
 
 id = opt$id
+output_dfmerged_2 = opt$output_dfmerged_2
 
 param_biovolume = opt$param_biovolume
 param_CalcType = opt$param_CalcType
@@ -28,7 +31,7 @@ param_CalcType = opt$param_CalcType
 
 
 
-df.merged=read.csv(output_dfmerged,stringsAsFactors=FALSE,sep = ";", dec = ".")
+df.merged=read.csv(output_dfmerged_2,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
 formulaforbiovolume = '' 
 formulaforbiovolumesimplified = '' 
@@ -65,12 +68,12 @@ if(param_biovolume==1){
   }
 } 
 
-output_dfmerged = 'output/dfmerged.csv'
-write.table(df.merged,paste(output_dfmerged,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)  
+output_dfmerged_3 = 'output/dfmerged.csv'
+write.table(df.merged,output_dfmerged_3,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)  
 
 
 
 # capturing outputs
-file <- file(paste0('/tmp/output_dfmerged_', id, '.json'))
-writeLines(toJSON(output_dfmerged, auto_unbox=TRUE), file)
+file <- file(paste0('/tmp/output_dfmerged_3_', id, '.json'))
+writeLines(toJSON(output_dfmerged_3, auto_unbox=TRUE), file)
 close(file)
