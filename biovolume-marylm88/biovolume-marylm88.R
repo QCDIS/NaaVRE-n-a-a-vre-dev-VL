@@ -8,9 +8,7 @@ library(jsonlite)
 option_list = list
 
 option_list = list(
-make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--output_dfmerged"), action="store", default=NA, type='character', help="my description")
+make_option(c("--id"), action="store", default=NA, type='character', help="my description")
 
 
 make_option(c("--param_biovolume"), action="store", default=NA, type='character', help="my description"),
@@ -22,7 +20,6 @@ opt = parse_args(OptionParser(option_list=option_list))
 
 
 id = opt$id
-output_dfmerged = opt$output_dfmerged
 
 param_biovolume = opt$param_biovolume
 param_CalcType = opt$param_CalcType
@@ -68,7 +65,12 @@ if(param_biovolume==1){
   }
 } 
 
+output_dfmerged = 'output/dfmerged.csv'
 write.table(df.merged,paste(output_dfmerged,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)  
 
 
 
+# capturing outputs
+file <- file(paste0('/tmp/output_dfmerged_', id, '.json'))
+writeLines(toJSON(output_dfmerged, auto_unbox=TRUE), file)
+close(file)
