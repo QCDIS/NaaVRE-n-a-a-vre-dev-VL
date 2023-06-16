@@ -8,14 +8,19 @@ library(jsonlite)
 option_list = list
 
 option_list = list(
-make_option(c("--cluster"), action="store", default=NA, type='character', help="my description"),
-
 make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
 
 make_option(c("--output_filter_1"), action="store", default=NA, type='character', help="my description")
 
 
+make_option(c("--param_cluster_country"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_cluster_day"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_cluster_eventid"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_cluster_locality"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_cluster_month"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_cluster_parenteventid"), action="store", default=NA, type='character', help="my description"),
 make_option(c("--param_cluster_whole"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_cluster_year"), action="store", default=NA, type='character', help="my description"),
 make_option(c("--param_density"), action="store", default=NA, type='character', help="my description"),
 make_option(c("--param_taxlev"), action="store", default=NA, type='character', help="my description"),
 make_option(c("--param_threshold"), action="store", default=NA, type='character', help="my description")
@@ -25,11 +30,17 @@ make_option(c("--param_threshold"), action="store", default=NA, type='character'
 opt = parse_args(OptionParser(option_list=option_list))
 
 
-cluster = fromJSON(opt$cluster)
 id = opt$id
 output_filter_1 = opt$output_filter_1
 
+param_cluster_country = opt$param_cluster_country
+param_cluster_day = opt$param_cluster_day
+param_cluster_eventid = opt$param_cluster_eventid
+param_cluster_locality = opt$param_cluster_locality
+param_cluster_month = opt$param_cluster_month
+param_cluster_parenteventid = opt$param_cluster_parenteventid
 param_cluster_whole = opt$param_cluster_whole
+param_cluster_year = opt$param_cluster_year
 param_density = opt$param_density
 param_taxlev = opt$param_taxlev
 param_threshold = opt$param_threshold
@@ -52,6 +63,17 @@ matzx = ''
 totz = ''
 trs = ''
 x = ''
+
+
+cluster = c()
+if (param_cluster_whole==1) cluster="whole"
+if (param_cluster_country==1) cluster=append(cluster,"country")
+if (param_cluster_locality==1) cluster=append(cluster,"locality")
+if (param_cluster_year==1) cluster=append(cluster,"year")
+if (param_cluster_month==1) cluster=append(cluster,"month")
+if (param_cluster_day==1) cluster=append(cluster,"day")
+if (param_cluster_parenteventid==1) cluster=append(cluster,"parenteventid")
+if (param_cluster_eventid==1) cluster=append(cluster,"eventid")
 
 if(param_cluster_whole==0) {
   if(length(cluster)>1) ID=apply(dataset[,cluster],1,function(x)paste(x,collapse='.'))
