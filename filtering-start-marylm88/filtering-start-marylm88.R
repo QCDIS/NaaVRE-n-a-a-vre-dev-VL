@@ -37,16 +37,6 @@ dataset=read.csv(output_traits,stringsAsFactors=FALSE,sep = ";", dec = ".")
 
 
 
-cluster = c()
-if (param_cluster_whole==1) cluster="whole"
-if (param_cluster_country==1) cluster=append(cluster,"country")
-if (param_cluster_locality==1) cluster=append(cluster,"locality")
-if (param_cluster_year==1) cluster=append(cluster,"year")
-if (param_cluster_month==1) cluster=append(cluster,"month")
-if (param_cluster_day==1) cluster=append(cluster,"day")
-if (param_cluster_parenteventid==1) cluster=append(cluster,"parenteventid")
-if (param_cluster_eventid==1) cluster=append(cluster,"eventid")
-
 
 if(!'density'%in%names(dataset)) dataset[,'density']=1
 if(!'biovolume'%in%names(dataset)) dataset[,'biovolume']=1
@@ -62,7 +52,4 @@ write.table(dataset,output_filter_1,row.names=FALSE,sep = ";",dec = ".",quote=FA
 # capturing outputs
 file <- file(paste0('/tmp/output_filter_1_', id, '.json'))
 writeLines(toJSON(output_filter_1, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/cluster_', id, '.json'))
-writeLines(toJSON(cluster, auto_unbox=TRUE), file)
 close(file)
