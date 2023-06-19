@@ -39,8 +39,6 @@ df.datain$measurementremarks <- tolower(df.datain$measurementremarks) # eliminat
 index = c(1:nrow(df.datain))
 df.datain$index <- c(1:nrow(df.datain)) # needed to restore rows order later
 
-sample_n(df.datain,3)
-
 df.operator<-read.csv('input/2_FILEinformativo_OPERATORE.csv',stringsAsFactors=FALSE,sep = ";", dec = ".") ## load internal database 
 df.operator[df.operator==('no')]<-NA
 df.operator[df.operator==('see note')]<-NA
@@ -71,8 +69,20 @@ write.table(df.datain,paste(output_dfdatain,sep=''),row.names=FALSE,sep = ";",de
 
 
 # capturing outputs
+file <- file(paste0('/tmp/numberoftransects_', id, '.json'))
+writeLines(toJSON(numberoftransects, auto_unbox=TRUE), file)
+close(file)
+file <- file(paste0('/tmp/diameteroffieldofview_', id, '.json'))
+writeLines(toJSON(diameteroffieldofview, auto_unbox=TRUE), file)
+close(file)
+file <- file(paste0('/tmp/transectcounting_', id, '.json'))
+writeLines(toJSON(transectcounting, auto_unbox=TRUE), file)
+close(file)
 file <- file(paste0('/tmp/diameterofsedimentationchamber_', id, '.json'))
 writeLines(toJSON(diameterofsedimentationchamber, auto_unbox=TRUE), file)
+close(file)
+file <- file(paste0('/tmp/settlingvolume_', id, '.json'))
+writeLines(toJSON(settlingvolume, auto_unbox=TRUE), file)
 close(file)
 file <- file(paste0('/tmp/dilutionfactor_', id, '.json'))
 writeLines(toJSON(dilutionfactor, auto_unbox=TRUE), file)
@@ -83,18 +93,6 @@ close(file)
 file <- file(paste0('/tmp/output_dfmerged_', id, '.json'))
 writeLines(toJSON(output_dfmerged, auto_unbox=TRUE), file)
 close(file)
-file <- file(paste0('/tmp/numberoftransects_', id, '.json'))
-writeLines(toJSON(numberoftransects, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/diameteroffieldofview_', id, '.json'))
-writeLines(toJSON(diameteroffieldofview, auto_unbox=TRUE), file)
-close(file)
 file <- file(paste0('/tmp/numberofcountedfields_', id, '.json'))
 writeLines(toJSON(numberofcountedfields, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/transectcounting_', id, '.json'))
-writeLines(toJSON(transectcounting, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/settlingvolume_', id, '.json'))
-writeLines(toJSON(settlingvolume, auto_unbox=TRUE), file)
 close(file)
