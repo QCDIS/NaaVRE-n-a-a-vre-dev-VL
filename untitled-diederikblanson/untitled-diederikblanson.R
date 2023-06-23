@@ -8,8 +8,6 @@ library(jsonlite)
 option_list = list
 
 option_list = list(
-make_option(c("--a"), action="store", default=NA, type='character', help="my description"),
-
 make_option(c("--id"), action="store", default=NA, type='character', help="my description")
 
 
@@ -19,14 +17,17 @@ make_option(c("--id"), action="store", default=NA, type='character', help="my de
 opt = parse_args(OptionParser(option_list=option_list))
 
 
-a = opt$a
 id = opt$id
 
 
 
 
 
-b = a
+a = 3
 
 
 
+# capturing outputs
+file <- file(paste0('/tmp/a_', id, '.json'))
+writeLines(toJSON(a, auto_unbox=TRUE), file)
+close(file)
