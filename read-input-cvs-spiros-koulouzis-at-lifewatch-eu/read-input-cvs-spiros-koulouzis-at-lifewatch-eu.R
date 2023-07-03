@@ -8,9 +8,7 @@ library(jsonlite)
 option_list = list
 
 option_list = list(
-make_option(c("--id"), action="store", default=NA, type='character', help="my description")
-
-
+make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
 make_option(c("--param_hostname"), action="store", default=NA, type='character', help="my description"),
 make_option(c("--param_login"), action="store", default=NA, type='character', help="my description"),
 make_option(c("--param_password"), action="store", default=NA, type='character', help="my description")
@@ -27,111 +25,95 @@ param_login = opt$param_login
 param_password = opt$param_password
 
 
-conf_density = 1
-conf_datain1 = 'traits/input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+conf_output = 'traits/output'
 conf_datain2 = 'traits/input/2_FILEinformativo_OPERATORE.csv'
-conf_local_datain1 = 'input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
-conf_local_datain2 = 'input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+conf_datain1 = 'traits/input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+conf_local <- c('traits','traits/input','traits/output')
+conf_density = 1
 
 
-conf_density = 1
-conf_datain1 = 'traits/input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+conf_output = 'traits/output'
 conf_datain2 = 'traits/input/2_FILEinformativo_OPERATORE.csv'
-conf_local_datain1 = 'input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
-conf_local_datain2 = 'input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+conf_datain1 = 'traits/input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+conf_local <- c('traits','traits/input','traits/output')
+conf_density = 1
 
 install.packages("RCurl",repos = "http://cran.us.r-project.org")
 RCurl = ''
 library(RCurl)
-
-
-UserPwd = ''
-
-auth <- basicTextGatherer()
-auth$UserPwd <- paste(param_login, param_password, sep = ":")
-
+install.packages("httr",repos = "http://cran.us.r-project.org")
+httr = ''
+library(httr)
 
 countingStrategy = ''
 if (conf_density==1) {countingStrategy <- 'density0'}
 
+index = 0
 
-file_content <- getURL(paste0(param_hostname,conf_datain1), curl = getCurlHandle(userpwd = auth$UserPwd))
-writeLines(file_content, conf_local_datain1)
+directory = ''
+for (directory in conf_local) {
+  if (!file.exists(directory)) {
+    dir.create(directory)
+  }
+}
 
-df.datain=read.csv(conf_local_datain1,stringsAsFactors=FALSE,sep = ";", dec = ".")
-measurementremarks = tolower(df.datain$measurementremarks) # eliminate capital letters
-df.datain$measurementremarks <- tolower(df.datain$measurementremarks) # eliminate capital letters
-index = c(1:nrow(df.datain))
-df.datain$index <- c(1:nrow(df.datain)) # needed to restore rows order later
 
-file_content <- getURL(paste0(param_hostname,conf_datain2), curl = getCurlHandle(userpwd = auth$UserPwd))
-writeLines(file_content, conf_local_datain2)
+auth = basicTextGatherer()
+cred = paste(param_login, param_password, sep = ":")
 
-df.operator<-read.csv(conf_local_datain2,stringsAsFactors=FALSE,sep = ";", dec = ".") ## load internal database 
+file_content <- getURL(paste0(param_hostname,conf_datain1), curl = getCurlHandle(userpwd = cred))
+writeLines(file_content, conf_datain1)
+
+df.datain=read.csv(conf_datain1,stringsAsFactors=FALSE,sep = ";", dec = ".")
+head(df.datain, n = 3)
+df.datain[,'measurementremarks'] = tolower(df.datain[,'measurementremarks']) # eliminate capital letters
+df.datain[,'index'] = c(1:nrow(df.datain)) # needed to restore rows order later
+
+file_content <- getURL(paste0(param_hostname,conf_datain2), curl = getCurlHandle(userpwd = cred))
+writeLines(file_content, conf_datain2)
+
+df.operator=read.csv(conf_datain2,stringsAsFactors=FALSE,sep = ";", dec = ".") # load internal database 
+head(df.operator, n = 3)
 df.operator[df.operator==('no')]<-NA
 df.operator[df.operator==('see note')]<-NA
 
-df.merged <- merge(x = df.datain, y = df.operator, by = c("scientificname","measurementremarks"), all.x = TRUE)
+df.merged = merge(x = df.datain, y = df.operator, by = c("scientificname","measurementremarks"), all.x = TRUE)
+head(df.merged, n = 3)
 
-diameterofsedimentationchamber = 'diameterofsedimentationchamber'
-diameteroffieldofview = 'diameteroffieldofview'
-transectcounting = 'transectcounting'
-numberofcountedfields = 'numberofcountedfields'
-numberoftransects = 'numberoftransects'
-settlingvolume = 'settlingvolume'
-dilutionfactor = 'dilutionfactor'
-
-if(!'diameterofsedimentationchamber'%in%names(df.merged))df.merged$diameterofsedimentationchamber=NA
-if(!'diameteroffieldofview'%in%names(df.merged))df.merged$diameteroffieldofview=NA
-if(!'transectcounting'%in%names(df.merged))df.merged$transectcounting=NA
-if(!'numberofcountedfields'%in%names(df.merged))df.merged$numberofcountedfields=df.merged$transectcounting
-if(!'numberoftransects'%in%names(df.merged))df.merged$numberoftransects==df.merged$transectcounting
-if(!'settlingvolume'%in%names(df.merged))df.merged$settlingvolume=NA
-if(!'dilutionfactor'%in%names(df.merged))df.merged$dilutionfactor=1
-
-output_dfmerged = 'output/dfmerged.csv'
-output_dfdatain = 'output/dfdatain.csv'
-write.table(df.merged,paste(output_dfmerged,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
-write.table(df.datain,paste(output_dfdatain,sep=''),row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
+if(!'diameterofsedimentationchamber'%in%names(df.merged))df.merged[,'diameterofsedimentationchamber']=NA
+if(!'diameteroffieldofview'%in%names(df.merged))df.merged[,'diameteroffieldofview']=NA
+if(!'transectcounting'%in%names(df.merged))df.merged[,'transectcounting']=NA
+if(!'numberofcountedfields'%in%names(df.merged))df.merged[,'numberofcountedfields']=df.merged[,'transectcounting']
+if(!'numberoftransects'%in%names(df.merged))df.merged[,'numberoftransects']=df.merged[,'transectcounting']
+if(!'settlingvolume'%in%names(df.merged))df.merged[,'settlingvolume']=NA
+if(!'dilutionfactor'%in%names(df.merged))df.merged[,'dilutionfactor']=1
 
 
+output_dfmerged_1 = 'traits/output/dfmerged.csv'
+write.table(df.merged,output_dfmerged_1,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)
+
+outputs <- c(output_dfmerged_1)
+
+file = ''
+size = 0 
+category = '' 
+file_name = '' 
+response = ''
+for (file in outputs) {
+    # Read the file content
+    file_content <- readBin(file, what = "raw", n = file.info(file)$size)
+    file_name <- basename(file)
+    # Create a PUT request
+    response <- httr::PUT(
+      url = paste0(param_hostname, conf_output,'/',file_name),
+      body = file_content,
+      httr::authenticate(user = param_login, password = param_password),
+      verbose()
+    )
+    print(response)
+}
+
+output_dfmerged = paste0(conf_output,'/dfmerged.csv')
 
 
 
-# capturing outputs
-file <- file(paste0('/tmp/settlingvolume_', id, '.json'))
-writeLines(toJSON(settlingvolume, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/transectcounting_', id, '.json'))
-writeLines(toJSON(transectcounting, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/output_dfmerged_', id, '.json'))
-writeLines(toJSON(output_dfmerged, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/diameteroffieldofview_', id, '.json'))
-writeLines(toJSON(diameteroffieldofview, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/diameterofsedimentationchamber_', id, '.json'))
-writeLines(toJSON(diameterofsedimentationchamber, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/dilutionfactor_', id, '.json'))
-writeLines(toJSON(dilutionfactor, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/numberofcountedfields_', id, '.json'))
-writeLines(toJSON(numberofcountedfields, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/auth_', id, '.json'))
-writeLines(toJSON(auth, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/UserPwd_', id, '.json'))
-writeLines(toJSON(UserPwd, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/numberoftransects_', id, '.json'))
-writeLines(toJSON(numberoftransects, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/index_', id, '.json'))
-writeLines(toJSON(index, auto_unbox=TRUE), file)
-close(file)
-file <- file(paste0('/tmp/countingStrategy_', id, '.json'))
-writeLines(toJSON(countingStrategy, auto_unbox=TRUE), file)
-close(file)
