@@ -27,14 +27,14 @@ param_password = opt$param_password
 
 conf_output = 'traits/output'
 conf_datain2 = 'traits/input/2_FILEinformativo_OPERATORE.csv'
-conf_datain1 = 'traits/input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+conf_datain1 = "traits/input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv"
 conf_local <- c('traits','traits/input','traits/output')
 conf_density = 1
 
 
 conf_output = 'traits/output'
 conf_datain2 = 'traits/input/2_FILEinformativo_OPERATORE.csv'
-conf_datain1 = 'traits/input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv'
+conf_datain1 = "traits/input/Phytoplankton__Progetto_Strategico_2009_2012_Australia.csv"
 conf_local <- c('traits','traits/input','traits/output')
 conf_density = 1
 
@@ -60,8 +60,9 @@ for (directory in conf_local) {
 
 auth = basicTextGatherer()
 cred = paste(param_login, param_password, sep = ":")
-
-file_content <- getURL(paste0(param_hostname,conf_datain1), curl = getCurlHandle(userpwd = cred))
+download_file = paste0(param_hostname,conf_datain1)
+print(download_file)
+file_content <- getURL(download_file, curl = getCurlHandle(userpwd = cred))
 writeLines(file_content, conf_datain1)
 
 df.datain=read.csv(conf_datain1,stringsAsFactors=FALSE,sep = ";", dec = ".")
