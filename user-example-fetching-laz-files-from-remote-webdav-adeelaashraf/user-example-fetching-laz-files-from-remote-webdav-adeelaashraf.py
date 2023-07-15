@@ -26,8 +26,8 @@ conf_remote_path_ahn =  'webdav/LAZ'
 
 conf_remote_path_ahn =  'webdav/LAZ'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
-laz_files = [[f for f in list_remote(get_wdclient(conf_wd_opts), pathlib.Path(conf_remote_path_ahn).as_posix())
-             if f.lower().endswith('.laz')]]
+laz_files = [f for f in list_remote(get_wdclient(conf_wd_opts), pathlib.Path(conf_remote_path_ahn).as_posix())
+             if f.lower().endswith('.laz')]
 
 import json
 filename = "/tmp/laz_files_" + id + ".json"
