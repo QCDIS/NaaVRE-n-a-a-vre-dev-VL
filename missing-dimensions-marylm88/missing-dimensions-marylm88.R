@@ -9,11 +9,11 @@ option_list = list
 
 option_list = list(
 make_option(c("--id"), action="store", default=NA, type='character', help="my description"),
-
-make_option(c("--output_dfmerged_1"), action="store", default=NA, type='character', help="my description")
-
-
-make_option(c("--param_CalcType"), action="store", default=NA, type='character', help="my description")
+make_option(c("--output_dfmerged_1"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_CalcType"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_hostname"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_login"), action="store", default=NA, type='character', help="my description"),
+make_option(c("--param_password"), action="store", default=NA, type='character', help="my description")
 )
 
 # set input parameters accordingly
@@ -24,9 +24,38 @@ id = opt$id
 output_dfmerged_1 = opt$output_dfmerged_1
 
 param_CalcType = opt$param_CalcType
+param_hostname = opt$param_hostname
+param_login = opt$param_login
+param_password = opt$param_password
 
 
+conf_output = 'traits/output'
+conf_local <- c('traits','traits/input','traits/output')
 
+
+conf_output = 'traits/output'
+conf_local <- c('traits','traits/input','traits/output')
+
+install.packages("RCurl",repos = "http://cran.us.r-project.org")
+RCurl = ''
+library(RCurl)
+install.packages("httr",repos = "http://cran.us.r-project.org")
+httr = ''
+library(httr)
+
+
+directory = ''
+for (directory in conf_local) {
+  if (!file.exists(directory)) {
+    dir.create(directory)
+  }
+}
+
+
+auth = basicTextGatherer()
+cred = paste(param_login, param_password, sep = ":")
+file_content <- getURL(paste0(param_hostname,output_dfmerged_1), curl = getCurlHandle(userpwd = cred))
+writeLines(file_content, output_dfmerged_1)
 
 
 df.merged=read.csv(output_dfmerged_1,stringsAsFactors=FALSE,sep = ";", dec = ".")
@@ -40,7 +69,6 @@ index = ''
 md = ''
 df.merged.concat = '' 
 md.formulas = ''
-
 
 if(param_CalcType=='advanced'){
   df.merged.concat = df.merged[is.na(df.merged[,'formulaformissingdimension']),]
@@ -70,12 +98,31 @@ if(param_CalcType=='advanced'){
   df.merged = df.merged.concat
 }
 
-output_dfmerged_2 = 'output/dfmerged.csv'
-write.table(df.merged,output_dfmerged_2,row.names=FALSE,sep = ";",dec = ".",quote=FALSE)  
+output_dfmerged_2 = 'traits/output/dfmerged.csv'
+write.table(df.merged,output_dfmerged_2,row.names=FALSE,sep = ";",dec = ".",quote=FALSE) 
+
+outputs <- c(output_dfmerged_2)
+
+file = ''
+size = 0 
+category = '' 
+file_name = '' 
+response = ''
+for (file in outputs) {
+    # Read the file content
+    file_content <- readBin(file, what = "raw", n = file.info(file)$size)
+    file_name <- basename(file)
+    # Create a PUT request
+    response <- httr::PUT(
+      url = paste0(param_hostname, conf_output,'/',file_name),
+      body = file_content,
+      httr::authenticate(user = param_login, password = param_password),
+      verbose()
+    )
+    print(response)
+}
+
+output_dfmerged_2 = paste0(conf_output,'/dfmerged.csv')
 
 
 
-# capturing outputs
-file <- file(paste0('/tmp/output_dfmerged_2_', id, '.json'))
-writeLines(toJSON(output_dfmerged_2, auto_unbox=TRUE), file)
-close(file)
