@@ -14,10 +14,10 @@ id = args.id
 
 
 
-a = 1
+my_var = 1
 
 import json
-filename = "/tmp/a_" + id + ".json"
-file_a = open(filename, "w")
-file_a.write(json.dumps(a))
-file_a.close()
+filename = "/tmp/my_var_" + id + ".json"
+file_my_var = open(filename, "w")
+file_my_var.write(json.dumps(my_var))
+file_my_var.close()
