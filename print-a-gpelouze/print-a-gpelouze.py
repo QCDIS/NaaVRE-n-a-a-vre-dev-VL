@@ -13,7 +13,8 @@ print(args)
 
 id = args.id
 
-a = args.a
+import json
+a = json.loads(args.a.replace('\'','').replace('[','["').replace(']','"]'))
 
 
 
