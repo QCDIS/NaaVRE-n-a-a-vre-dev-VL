@@ -14,7 +14,7 @@ id = args.id
 
 
 
-a = 1
+a = "hello"
 
 import json
 filename = "/tmp/a_" + id + ".json"
