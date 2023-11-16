@@ -1,3 +1,4 @@
+import pathlib
 
 import argparse
 arg_parser = argparse.ArgumentParser()
@@ -5,27 +6,25 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--conf_attribute', action='store', type=str, required='True', dest='conf_attribute')
-
-arg_parser.add_argument('--conf_filter_type', action='store', type=str, required='True', dest='conf_filter_type')
-
-arg_parser.add_argument('--conf_local_tmp', action='store', type=str, required='True', dest='conf_local_tmp')
-
-arg_parser.add_argument('--conf_remote_path_norm', action='store', type=str, required='True', dest='conf_remote_path_norm')
-
+arg_parser.add_argument('--param_username', action='store', type=str, required='True', dest='param_username')
 
 args = arg_parser.parse_args()
 print(args)
 
 id = args.id
 
-conf_attribute = args.conf_attribute
-conf_filter_type = args.conf_filter_type
-conf_local_tmp = args.conf_local_tmp
-conf_remote_path_norm = args.conf_remote_path_norm
 
+param_username = args.param_username
 
+conf_remote_path_norm = pathlib.Path( '/webdav/vl-laserfarm' + '/norm_'+param_username)
+conf_local_tmp = pathlib.Path('/tmp')
+conf_attribute = 'raw_classification'
+conf_filter_type = 'select_equal'
 
+conf_remote_path_norm = pathlib.Path( '/webdav/vl-laserfarm' + '/norm_'+param_username)
+conf_local_tmp = pathlib.Path('/tmp')
+conf_attribute = 'raw_classification'
+conf_filter_type = 'select_equal'
 
 
 feature_extraction_input = {
