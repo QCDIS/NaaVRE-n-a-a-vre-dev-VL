@@ -74,8 +74,8 @@ feature_extraction_input = {
     'load': {'attributes': [conf_attribute]},
     'normalize': 1,
     
-    'apply_filter': {
-        # 'filter_type': conf_filter_type, 
+    'apply_filter': { 
+        # 'filter_type': conf_filter_type
         # 'attribute': conf_attribute,
         # 'value': [int(conf_apply_filter_value)]#ground surface (2), water (9), buildings (6), artificial objects (26), vegetation (?), and unclassified (1)
     }
