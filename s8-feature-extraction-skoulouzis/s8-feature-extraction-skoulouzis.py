@@ -28,10 +28,12 @@ param_password = args.param_password
 param_username = args.param_username
 
 conf_n_tiles_side = '512'
+conf_apply_filter_value = '1'
 conf_tile_mesh_size = '10'
 conf_local_tmp = pathlib.Path('/tmp')
 conf_min_y = '214783.87'
 conf_remote_path_targets = pathlib.Path( '/webdav/vl-laserfarm' + '/targets_'+param_username)
+conf_validate_precision = '0.001'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 conf_max_x = '398892.19'
 conf_attribute = 'raw_classification'
@@ -41,10 +43,12 @@ conf_min_x = '-113107.81'
 conf_filter_type = 'select_equal'
 
 conf_n_tiles_side = '512'
+conf_apply_filter_value = '1'
 conf_tile_mesh_size = '10'
 conf_local_tmp = pathlib.Path('/tmp')
 conf_min_y = '214783.87'
 conf_remote_path_targets = pathlib.Path( '/webdav/vl-laserfarm' + '/targets_'+param_username)
+conf_validate_precision = '0.001'
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 conf_max_x = '398892.19'
 conf_attribute = 'raw_classification'
@@ -77,10 +81,26 @@ feature_extraction_input = {
     'normalize': 1,
     
     'apply_filter': { 
-        'filter_type': conf_filter_type, 'attribute': conf_attribute
-        # 'value': [int(conf_apply_filter_value)]#ground surface (2), water (9), buildings (6), artificial objects (26), vegetation (?), and unclassified (1)
-    }
-    
+        'filter_type': conf_filter_type, 
+        'attribute': conf_attribute, 
+        'value': [int(conf_apply_filter_value)]#ground surface (2), water (9), buildings (6), artificial objects (26), vegetation (?), and unclassified (1)
+    },    
+    'generate_targets': {
+        'tile_mesh_size' : tile_mesh_size,
+        'validate' : True,
+        'validate_precision': float(conf_validate_precision),
+        **grid_feature
+    },
+    'extract_features': {
+        'feature_names': features,
+        'volume_type': 'cell',
+        'volume_size': tile_mesh_size
+    },
+    'export_targets': {
+        'attributes': features,
+        'multi_band_files': False
+    },
+    'pushremote': conf_remote_path_targets.as_posix(),
 }
 
 for t in tiles:    
