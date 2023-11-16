@@ -38,6 +38,7 @@ conf_attribute = 'raw_classification'
 conf_remote_path_norm = pathlib.Path( '/webdav/vl-laserfarm' + '/norm_'+param_username)
 conf_max_y = '726783.87'
 conf_min_x = '-113107.81'
+conf_filter_type = 'select_equal'
 
 conf_n_tiles_side = '512'
 conf_tile_mesh_size = '10'
@@ -50,6 +51,7 @@ conf_attribute = 'raw_classification'
 conf_remote_path_norm = pathlib.Path( '/webdav/vl-laserfarm' + '/norm_'+param_username)
 conf_max_y = '726783.87'
 conf_min_x = '-113107.81'
+conf_filter_type = 'select_equal'
 
 remote_path_targets = str(conf_remote_path_targets)
 
@@ -75,8 +77,7 @@ feature_extraction_input = {
     'normalize': 1,
     
     'apply_filter': { 
-        # 'filter_type': conf_filter_type
-        'attribute': conf_attribute
+        'filter_type': conf_filter_type, 'attribute': conf_attribute
         # 'value': [int(conf_apply_filter_value)]#ground surface (2), water (9), buildings (6), artificial objects (26), vegetation (?), and unclassified (1)
     }
     
