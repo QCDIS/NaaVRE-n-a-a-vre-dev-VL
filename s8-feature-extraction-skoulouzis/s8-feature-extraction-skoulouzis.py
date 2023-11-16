@@ -29,19 +29,25 @@ param_username = args.param_username
 
 conf_n_tiles_side = '512'
 conf_tile_mesh_size = '10'
+conf_local_tmp = pathlib.Path('/tmp')
 conf_min_y = '214783.87'
 conf_remote_path_targets = pathlib.Path( '/webdav/vl-laserfarm' + '/targets_'+param_username)
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 conf_max_x = '398892.19'
+conf_attribute = 'raw_classification'
+conf_remote_path_norm = pathlib.Path( '/webdav/vl-laserfarm' + '/norm_'+param_username)
 conf_max_y = '726783.87'
 conf_min_x = '-113107.81'
 
 conf_n_tiles_side = '512'
 conf_tile_mesh_size = '10'
+conf_local_tmp = pathlib.Path('/tmp')
 conf_min_y = '214783.87'
 conf_remote_path_targets = pathlib.Path( '/webdav/vl-laserfarm' + '/targets_'+param_username)
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
 conf_max_x = '398892.19'
+conf_attribute = 'raw_classification'
+conf_remote_path_norm = pathlib.Path( '/webdav/vl-laserfarm' + '/norm_'+param_username)
 conf_max_y = '726783.87'
 conf_min_x = '-113107.81'
 
@@ -60,6 +66,13 @@ grid_feature = {
 }
 
 feature_extraction_input = {
+    'setup_local_fs': {
+        'input_folder': (conf_local_tmp / 'tile_input').as_posix(),
+        'output_folder': (conf_local_tmp / 'tile_output').as_posix(),
+    },
+    'pullremote': conf_remote_path_norm.as_posix(),
+    'load': {'attributes': [conf_attribute]},
+    'normalize': 1
 }
 
 for t in tiles:    
