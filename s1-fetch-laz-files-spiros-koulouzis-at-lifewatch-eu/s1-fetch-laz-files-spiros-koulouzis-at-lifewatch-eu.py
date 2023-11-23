@@ -22,11 +22,11 @@ param_hostname = args.param_hostname
 param_login = args.param_login
 param_password = args.param_password
 
-conf_remote_path_ahn = pathlib.Path( '/webdav/vl-laserfarm'+'/ahn')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_remote_path_ahn = pathlib.Path( '/webdav/vl-laserfarm'+'/ahn')
 
-conf_remote_path_ahn = pathlib.Path( '/webdav/vl-laserfarm'+'/ahn')
 conf_wd_opts = { 'webdav_hostname': param_hostname, 'webdav_login': param_login, 'webdav_password': param_password}
+conf_remote_path_ahn = pathlib.Path( '/webdav/vl-laserfarm'+'/ahn')
 
 laz_files = [f for f in list_remote(get_wdclient(conf_wd_opts), conf_remote_path_ahn.as_posix())
              if f.lower().endswith('.laz')]
